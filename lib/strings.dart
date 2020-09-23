@@ -19,6 +19,7 @@ String sAddWorkout = 'اضافة تمرين';
 String sPlanName = 'اسم البرنامج';
 String sDescription = 'شرح';
 String sPlanDuration = 'مدة البرنامج';
+String sDeleteWorkoutQuestion = 'هل انت متاكد انك تريد ازالة التمرين؟';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';

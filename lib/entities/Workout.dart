@@ -23,7 +23,7 @@ class Workout {
   String workoutName;
   String content;
   String gifPath;
-  String _sideNote;
+  String sideNote;
 
   getJson() {
     return {
@@ -31,7 +31,7 @@ class Workout {
       "workoutName": workoutName,
       "content": content,
       "gifPath": gifPath,
-      "sideNote": _sideNote
+      "sideNote": sideNote
     };
   }
 }

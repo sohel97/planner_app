@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/components/remove_workout_alert.dart';
+import 'package:planner_app/components/showWorkoutAlert.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutDay.dart';
 import 'package:planner_app/entities/WorkoutMuscleItem.dart';
+import 'package:planner_app/screens/planning_screens/pick_exercise_page.dart';
 
 import '../../constants.dart';
 import '../../strings.dart';
@@ -26,6 +29,7 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
     workout.gifPath = 'assets/images/workout.gif';
     workout.workoutName = 'name';
     workout.content = 'content';
+    workout.sideNote = 'sidenote';
     workout.type = WorkoutType.Strength;
 
     widget.workoutDay.workouts.elementAt(0).workouts.add(workout);
@@ -85,18 +89,21 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                   return ListTile(
                     title: Text(workout.workoutName),
                     leading: Image.asset(workout.gifPath),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          print('deleted');
-                          //TODO:delete item
-                        });
-                      },
-                    ),
+                    trailing: Text(workout.sideNote),
+                    subtitle: Text(workout.content),
                     onTap: () {
-                      //TODO: view full item
-                      print('viewfull item');
+                      showWorkoutAlert(context: context, img: workout.gifPath);
+                    },
+                    onLongPress: () {
+                      questionAlert(
+                          context: context,
+                          label: sDeleteWorkoutQuestion,
+                          callback: () {
+                            setState(() {
+                              workoutMuscleItem.workouts.remove(workout);
+                              Navigator.of(context).pop();
+                            });
+                          });
                     },
                   );
                 }).toList(),
@@ -104,6 +111,15 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
               FlatButton(
                 onPressed: () {
                   //TODO addworkout to this list.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PickWorkoutPage(
+                                workouts: workoutMuscleItem.workouts,
+                                name: workoutMuscleItem.header,
+                              ))).then((value) {
+                    setState(() {});
+                  });
                   print('addworkout to ${workoutMuscleItem.header}');
                 },
                 child: Text(
@@ -113,13 +129,6 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
               ),
             ],
           ),
-          // ListTile(
-          //     title: Text(workoutMuscleItem.isExpanded.toString()),
-          //     subtitle: Text('To delete this panel, tap the trash can icon'),
-          //     trailing: Icon(Icons.delete),
-          //     onTap: () {
-          //       setState(() {});
-          //     }),
           isExpanded: workoutMuscleItem.isExpanded,
         );
       }).toList(),
