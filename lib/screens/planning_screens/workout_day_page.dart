@@ -21,22 +21,6 @@ class WorkoutDayPage extends StatefulWidget {
 
 class _WorkoutDayPageState extends State<WorkoutDayPage> {
   @override
-  void initState() {
-    //TODO remove this item and load from firebase
-
-    print(widget.workoutDay.workouts.elementAt(0).workouts.length);
-    Workout workout = new Workout();
-    workout.gifPath = 'assets/images/workout.gif';
-    workout.workoutName = 'name';
-    workout.content = 'content';
-    workout.sideNote = 'sidenote';
-    workout.type = WorkoutType.Strength;
-
-    widget.workoutDay.workouts.elementAt(0).workouts.add(workout);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
@@ -82,27 +66,7 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
           },
           body: Column(
             children: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  //TODO addworkout to this list.
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PickWorkoutPage(
-                                workouts: workoutMuscleItem.workouts,
-                                name: workoutMuscleItem.header,
-                              ))).then((value) {
-                    setState(() {});
-                  });
-                  print('addworkout to ${workoutMuscleItem.header}');
-                },
-                child: Text(
-                  sAddWorkout,
-                ),
-                color: kButtonsColor,
-              ),
-              ListView(
-                shrinkWrap: true,
+              Column(
                 children:
                     workoutMuscleItem.workouts.map<Widget>((Workout workout) {
                   return ListTile(
@@ -126,6 +90,25 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                     },
                   );
                 }).toList(),
+              ),
+              FlatButton(
+                onPressed: () {
+                  //TODO addworkout to this list.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PickWorkoutPage(
+                                workouts: workoutMuscleItem.workouts,
+                                name: workoutMuscleItem.header,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                  print('addworkout to ${workoutMuscleItem.header}');
+                },
+                child: Text(
+                  sAddWorkout,
+                ),
+                color: kButtonsColor,
               ),
             ],
           ),
