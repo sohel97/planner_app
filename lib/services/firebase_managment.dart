@@ -65,11 +65,18 @@ List<Workout> getAllWorkouts(String muscleName) {
   workout.workoutName = 'name';
   workout.content = 'content';
   workout.sideNote = 'sidenote';
+  workout.type = WorkoutType.Stretching;
 
-  workout.type = WorkoutType.Strength;
+  Workout workout2 = new Workout();
+  workout2.gifPath = 'assets/images/workout.gif';
+  workout2.workoutName = 'name';
+  workout2.content = 'content';
+  workout2.sideNote = 'sidenote';
+  workout2.type = WorkoutType.Aerobic;
 
   List<Workout> list = new List<Workout>();
   list.add(workout);
   list.add(workout1);
+  list.add(workout2);
   return list;
 }

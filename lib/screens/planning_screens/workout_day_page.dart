@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/remove_workout_alert.dart';
-import 'package:planner_app/components/showWorkoutAlert.dart';
+import 'package:planner_app/components/show_workout_alert.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutDay.dart';
 import 'package:planner_app/entities/WorkoutMuscleItem.dart';
@@ -82,10 +82,29 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
           },
           body: Column(
             children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  //TODO addworkout to this list.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PickWorkoutPage(
+                                workouts: workoutMuscleItem.workouts,
+                                name: workoutMuscleItem.header,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                  print('addworkout to ${workoutMuscleItem.header}');
+                },
+                child: Text(
+                  sAddWorkout,
+                ),
+                color: kButtonsColor,
+              ),
               ListView(
                 shrinkWrap: true,
                 children:
-                    workoutMuscleItem.workouts.map<ListTile>((Workout workout) {
+                    workoutMuscleItem.workouts.map<Widget>((Workout workout) {
                   return ListTile(
                     title: Text(workout.workoutName),
                     leading: Image.asset(workout.gifPath),
@@ -107,25 +126,6 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                     },
                   );
                 }).toList(),
-              ),
-              FlatButton(
-                onPressed: () {
-                  //TODO addworkout to this list.
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PickWorkoutPage(
-                                workouts: workoutMuscleItem.workouts,
-                                name: workoutMuscleItem.header,
-                              ))).then((value) {
-                    setState(() {});
-                  });
-                  print('addworkout to ${workoutMuscleItem.header}');
-                },
-                child: Text(
-                  sAddWorkout,
-                ),
-                color: kButtonsColor,
               ),
             ],
           ),

@@ -20,7 +20,6 @@ class WorkoutAlert extends StatefulWidget {
 class _WorkoutAlertState extends State<WorkoutAlert> {
   @override
   Widget build(BuildContext context) {
-    final _proccedKey = GlobalKey<FormState>();
     return AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0))),

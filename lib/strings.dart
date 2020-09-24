@@ -20,6 +20,8 @@ String sPlanName = 'اسم البرنامج';
 String sDescription = 'شرح';
 String sPlanDuration = 'مدة البرنامج';
 String sDeleteWorkoutQuestion = 'هل انت متاكد انك تريد ازالة التمرين؟';
+String sWorkoutDuration = 'مدة التمرين بالدقائق';
+String sMinute = 'دقيقة';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';
@@ -55,6 +57,7 @@ String sNext = "التالي";
 String sSave = "حفظ";
 String sYes = 'نعم';
 String sNo = 'لا';
+String sCancel = 'الغاء';
 String sAreYouSureYouWantToDeleteTheUser =
     "هل انت متاكد انك تريد ازالة بيانات المستخدم";
 String sDeleteUserData = "ازالة بيانات المستخدم";

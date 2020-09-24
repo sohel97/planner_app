@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/components/add_workout_sidenote_alert.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/services/firebase_managment.dart';
+import 'package:planner_app/strings.dart';
 
 // ignore: must_be_immutable
 class PickWorkoutPage extends StatefulWidget {
@@ -23,20 +25,26 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(sAddWorkout),
+          centerTitle: true,
+        ),
         body: ListView(
-      shrinkWrap: true,
-      children: allWorkouts.map<ListTile>((Workout workout) {
-        return ListTile(
-          title: Text(workout.workoutName),
-          leading: Image.asset(workout.gifPath),
-          trailing: Text(workout.type.toString()),
-          subtitle: Text(workout.content),
-          onTap: () {
-            widget.workouts.add(workout);
-            Navigator.of(context).pop();
-          },
-        );
-      }).toList(),
-    ));
+          shrinkWrap: true,
+          children: allWorkouts.map<ListTile>((Workout workout) {
+            return ListTile(
+              title: Text(workout.workoutName),
+              leading: Image.asset(workout.gifPath),
+              trailing: Text(workout.type.toString()),
+              subtitle: Text(workout.content),
+              onTap: () {
+                addWorkoutSideNote(
+                    context: context,
+                    workout: workout,
+                    workouts: widget.workouts);
+              },
+            );
+          }).toList(),
+        ));
   }
 }
