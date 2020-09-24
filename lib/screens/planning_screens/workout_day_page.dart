@@ -99,7 +99,7 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                       MaterialPageRoute(
                           builder: (context) => PickWorkoutPage(
                                 workouts: workoutMuscleItem.workouts,
-                                name: workoutMuscleItem.header,
+                                type: workoutMuscleItem.type,
                               ))).then((value) {
                     setState(() {});
                   });

@@ -7,8 +7,8 @@ import 'package:planner_app/strings.dart';
 // ignore: must_be_immutable
 class PickWorkoutPage extends StatefulWidget {
   List<Workout> workouts;
-  String name;
-  PickWorkoutPage({Key key, this.workouts, this.name}) : super(key: key);
+  WorkoutType type;
+  PickWorkoutPage({Key key, this.workouts, this.type}) : super(key: key);
   @override
   _PickWorkoutPageState createState() => _PickWorkoutPageState();
 }
@@ -18,7 +18,7 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
 
   @override
   void initState() {
-    allWorkouts = getAllWorkouts(widget.name);
+    allWorkouts = getAllWorkouts(widget.type);
     super.initState();
   }
 

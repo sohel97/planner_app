@@ -52,13 +52,13 @@ getAllPremadePlans() {
 }
 
 //TODO this
-List<Workout> getAllWorkouts(String muscleName) {
+List<Workout> getAllWorkouts(WorkoutType muscleName) {
   Workout workout1 = new Workout();
   workout1.gifPath = 'assets/images/workout.gif';
   workout1.workoutName = 'first';
   workout1.content = 'content';
   workout1.sideNote = 'sidenote';
-  workout1.type = WorkoutType.Strength;
+  workout1.type = WorkoutType.Shoulders;
 
   Workout workout = new Workout();
   workout.gifPath = 'assets/images/workout.gif';

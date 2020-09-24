@@ -21,7 +21,9 @@ class WorkoutMuscleItem {
   String header;
   List<Workout> workouts;
   String iconpic;
-  WorkoutMuscleItem({@required this.header, @required this.iconpic}) {
+  WorkoutType type;
+  WorkoutMuscleItem(
+      {@required this.header, @required this.iconpic, @required this.type}) {
     this.isExpanded = false;
     this.workouts = new List<Workout>();
   }

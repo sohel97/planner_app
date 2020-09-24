@@ -13,7 +13,13 @@
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 enum WorkoutType {
-  Strength,
+  Shoulders,
+  Back,
+  Arms,
+  Chest,
+  Abs,
+  Hips,
+  Legs,
   Aerobic,
   Stretching,
 }
