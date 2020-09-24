@@ -22,6 +22,7 @@ String sPlanDuration = 'مدة البرنامج';
 String sDeleteWorkoutQuestion = 'هل انت متاكد انك تريد ازالة التمرين؟';
 String sWorkoutDuration = 'مدة التمرين بالدقائق';
 String sMinute = 'دقيقة';
+String sWorkoutRibs = 'عدد الدخلات';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';

@@ -17,6 +17,160 @@ void addWorkoutSideNote({context, Workout workout, List<Workout> workouts}) {
       });
 }
 
+class StrengthSideNoteAlert extends StatefulWidget {
+  final Workout workout;
+  final List<Workout> workouts;
+
+  StrengthSideNoteAlert({this.workout, this.workouts});
+
+  @override
+  _StrengthSideNoteAlertState createState() => _StrengthSideNoteAlertState();
+}
+
+class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
+  int ribs = 0;
+  List<int> iter = new List<int>();
+  List<int> values = new List<int>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _proccedKey = GlobalKey<FormState>();
+    return AlertDialog(
+      content: Stack(
+        overflow: Overflow.visible,
+        children: <Widget>[
+          Directionality(
+            textDirection: kAppDirection,
+            child: Form(
+              key: _proccedKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        sWorkoutRibs,
+                        style: kLabelTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: <Widget>[
+                          Text(
+                            ribs.toString(),
+                            style: kNumberTextStyle,
+                          ),
+                        ],
+                      ),
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          inactiveTrackColor: Color(0xFF8D8E98),
+                          activeTrackColor: Colors.white,
+                          thumbColor: kButtonsColor,
+                          overlayColor: Color(0x29EC801A),
+                          thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                          overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 30.0),
+                        ),
+                        child: Slider(
+                          value: ribs.toDouble(),
+                          min: 0,
+                          max: 5,
+                          onChanged: (double newValue) {
+                            setState(() {
+                              ribs = newValue.round();
+                              updateList();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: iter.map<Row>((int value) {
+                      return Row(
+                        children: <Widget>[
+                          Text(values[value].toString()),
+                          Slider(
+                              value: values[value].toDouble(),
+                              max: 30,
+                              min: 0,
+                              label: value.toString(),
+                              onChanged: (val) {
+                                setState(() {
+                                  values[value] = val.round();
+                                });
+                              }),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.red)),
+                          color: Colors.redAccent,
+                          child: Text(sCancel),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          child: Text(sAdd),
+                          onPressed: () {
+                            if (_proccedKey.currentState.validate()) {
+                              Workout toAdd = new Workout();
+                              toAdd.type = widget.workout.type;
+                              toAdd.workoutName = widget.workout.workoutName;
+                              toAdd.gifPath = widget.workout.gifPath;
+                              toAdd.content = widget.workout.content;
+                              toAdd.sideNote = values.join(',');
+                              widget.workouts.add(toAdd);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  updateList() {
+    iter.clear();
+    values.clear();
+    for (int i = 0; i < ribs; i++) {
+      values.add(0);
+      iter.add(i);
+    }
+  }
+}
+
 class AerobicSideNoteAlert extends StatefulWidget {
   final Workout workout;
   final List<Workout> workouts;
@@ -104,62 +258,6 @@ class _AerobicSideNoteAlertState extends State<AerobicSideNoteAlert> {
                           widget.workouts.add(toAdd);
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.red)),
-                        color: Colors.redAccent,
-                        child: Text(sCancel),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class StrengthSideNoteAlert extends StatelessWidget {
-  final Workout workout;
-  final List<Workout> workouts;
-
-  StrengthSideNoteAlert({this.workout, this.workouts});
-  @override
-  Widget build(BuildContext context) {
-    final _proccedKey = GlobalKey<FormState>();
-    return AlertDialog(
-      content: Stack(
-        overflow: Overflow.visible,
-        children: <Widget>[
-          Form(
-            key: _proccedKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        child: Text(sAdd),
-                        onPressed: () {
-                          if (_proccedKey.currentState.validate()) {}
                         },
                       ),
                     ),
