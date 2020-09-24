@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:planner_app/screens/member_screens/search_member_page.dart';
 import 'package:planner_app/screens/planning_screens/premade_plans_page.dart';
-import 'package:planner_app/screens/search_member_page.dart';
 import 'package:planner_app/strings.dart';
 
 import 'constants.dart';
