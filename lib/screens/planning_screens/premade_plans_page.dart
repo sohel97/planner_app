@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
-import 'package:planner_app/screens/planning_screens/planning_page.dart';
+import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/firebase_managment.dart';
 
 import '../../constants.dart';
+import 'add_workout_schedule_page.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -44,7 +45,13 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
             itemCount: plans.length,
             itemBuilder: (context, position) {
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditWorkoutSchedulePage(
+                              plans.elementAt(position))));
+                },
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),

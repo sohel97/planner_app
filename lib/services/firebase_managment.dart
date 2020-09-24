@@ -80,3 +80,7 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
   list.add(workout2);
   return list;
 }
+
+//TODO
+addAsAPremadePlan(WorkoutPlan plan) {}
+void updatePremadePlan(WorkoutPlan plan) {}
