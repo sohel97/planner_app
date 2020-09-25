@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:planner_app/screens/member_screens/search_member_page.dart';
@@ -48,6 +49,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
+    FirebaseDatabase()
+        .reference()
+        .child("Planners")
+        .child("Trainers")
+        .child("305180309")
+        .set({
+      "Customers": {"id1": "123456", "id2": "4757483", "id3": "3464323"}
+    });
     setState(() {
       _selectedIndex = index;
     });

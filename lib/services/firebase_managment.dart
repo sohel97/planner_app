@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
@@ -17,7 +18,25 @@ import 'package:planner_app/entities/WorkoutPlan.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 //TODO this
-getAllMembers({String text}) {
+enum OrderBy { WillExpireSoon, Expired, Freezed }
+final ref = FirebaseDatabase().reference().child("Planners").child("Trainers");
+
+getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
+  return ref.once().then((DataSnapshot snapshot) {
+    List<Member> members = new List<Member>();
+
+    if (snapshot.value != null) {
+      Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
+
+      mapOfMaps.values.forEach((value) {
+        members.add(Member.fromMember(Map.from(value)));
+      });
+    }
+
+    print("the length:${members.length}");
+    return members;
+  });
+  /*
   List<WorkoutPlan> plans = new List<WorkoutPlan>();
   List<Member> members = new List<Member>();
   members.add(Member(
@@ -40,6 +59,7 @@ getAllMembers({String text}) {
   ));
 
   return members;
+   */
 }
 
 //TODO this

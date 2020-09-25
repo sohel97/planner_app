@@ -70,7 +70,7 @@ class _SearchMemberPageState extends State<SearchMemberPage> {
           //TODO future builder and implement search method
           child: ListView(
             children: <Widget>[
-              for (Member member in getAllMembers())
+              for (Member member in new List<Member>())
                 InkWell(
                   onTap: () {
                     Navigator.push(

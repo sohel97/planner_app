@@ -23,6 +23,17 @@ enum WorkoutType {
   Aerobic,
   Stretching,
 }
+const stringToType = {
+  "WorkoutType.Shoulders": WorkoutType.Shoulders,
+  "WorkoutType.Back": WorkoutType.Back,
+  "WorkoutType.Arms": WorkoutType.Arms,
+  "WorkoutType.Chest": WorkoutType.Chest,
+  "WorkoutType.Abs": WorkoutType.Abs,
+  "WorkoutType.Hips": WorkoutType.Hips,
+  "WorkoutType.Legs": WorkoutType.Legs,
+  "WorkoutType.Aerobic": WorkoutType.Aerobic,
+  "WorkoutType.Stretching": WorkoutType.Stretching
+};
 
 class Workout {
   WorkoutType type;
@@ -30,6 +41,15 @@ class Workout {
   String content;
   String gifPath;
   String sideNote;
+  Workout(
+      {this.type, this.workoutName, this.content, this.gifPath, this.sideNote});
+  Workout.getFromJson(var json) {
+    type = stringToType[json["type"]];
+    workoutName = json["workoutName"];
+    content = json["content"];
+    gifPath = json["gifPath"];
+    sideNote = json["sideNote"];
+  }
 
   getJson() {
     return {

@@ -1,6 +1,7 @@
 import 'package:planner_app/entities/Workout.dart';
 
 import 'WorkoutMuscleItem.dart';
+import 'WorkoutMuscleItem.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -66,5 +67,22 @@ class WorkoutDay {
         header: 'stretching',
         iconpic: 'assets/images/stretching.png',
         type: WorkoutType.Stretching));
+  }
+
+  WorkoutDay.getFromJson(var json) {
+    restDay = json["restDay"];
+    var workouts = json["workouts"];
+    Map<String, dynamic> mapOfMaps = Map.from(workouts);
+    mapOfMaps.values.forEach((value) {
+      this.workouts.add(new WorkoutMuscleItem.getFromJson(Map.from(value)));
+    });
+  }
+  getJson() {
+    var workoutsJsons = {};
+    for (int i = 0; i < workouts.length; i++) {
+      workoutsJsons[(i + 1).toString()] = workouts[i].getJson();
+    }
+
+    return {"restDay": restDay, "workouts": workoutsJsons};
   }
 }
