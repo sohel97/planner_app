@@ -55,6 +55,14 @@ class Member {
     return json;
   }
 
+  getPlansHistoryJson() {
+    var plansHistory = {};
+    for (WorkoutPlan plan in this.plansHistory) {
+      plansHistory[plan.getKey()] = plan.getJson();
+    }
+    return plansHistory;
+  }
+
   Member.fromMember(var json) {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];

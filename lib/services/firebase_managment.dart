@@ -19,10 +19,10 @@ import 'package:planner_app/entities/WorkoutPlan.dart';
 /---------------------------------------------------------------------------- */
 //TODO this
 enum OrderBy { WillExpireSoon, Expired, Freezed }
-final ref = FirebaseDatabase().reference().child("Planners").child("Trainers");
+final ref = FirebaseDatabase().reference().child("Planners");
 
 getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
-  return ref.once().then((DataSnapshot snapshot) {
+  return ref.child("Customers").once().then((DataSnapshot snapshot) {
     List<Member> members = new List<Member>();
 
     if (snapshot.value != null) {
@@ -60,6 +60,15 @@ getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
 
   return members;
    */
+}
+
+addPlanToCustomer(WorkoutPlan plan, Member member) {
+  member.addNewPlan(plan);
+  ref
+      .child("Customers")
+      .child(member.id)
+      .child("plansHistory")
+      .update(member.getPlansHistoryJson());
 }
 
 //TODO this

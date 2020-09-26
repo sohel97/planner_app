@@ -26,8 +26,8 @@ class WorkoutPlan {
   WorkoutDay daySix;
   WorkoutDay daySeven;
   DateTime startDate;
-  DateTime endDate;
-  WorkoutPlan({this.planName, int days}) {
+  DateTime endDate = DateTime.now();
+  WorkoutPlan({this.planName, int days = 30}) {
     dayOne = new WorkoutDay();
     dayTwo = new WorkoutDay();
     dayThree = new WorkoutDay();
