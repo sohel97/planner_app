@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../strings.dart';
+import '../../strings.dart';
 
-void questionAlert({context, callback, String label}) {
+void questionAlert({context, callback, String label, cancelCallback}) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -12,17 +12,25 @@ void questionAlert({context, callback, String label}) {
           callback: callback,
           leftOption: sYes,
           rightOption: sNo,
+          cancelCallback: cancelCallback,
         );
       });
 }
 
 class TwoOptionAlert extends StatelessWidget {
   final callback;
+  final cancelCallback;
   final String label;
   final String leftOption;
   final String rightOption;
-  TwoOptionAlert(
-      {this.callback, this.label, this.leftOption, this.rightOption});
+
+  TwoOptionAlert({
+    this.callback,
+    this.label,
+    this.leftOption,
+    this.rightOption,
+    this.cancelCallback,
+  });
   @override
   Widget build(BuildContext context) {
     final _proccedKey = GlobalKey<FormState>();
@@ -61,6 +69,9 @@ class TwoOptionAlert extends StatelessWidget {
                         color: Colors.redAccent,
                         child: Text(rightOption),
                         onPressed: () {
+                          if (cancelCallback != null) {
+                            cancelCallback();
+                          }
                           Navigator.of(context).pop();
                         },
                       ),

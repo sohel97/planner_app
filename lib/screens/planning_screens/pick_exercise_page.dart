@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:planner_app/components/add_workout_sidenote_alert.dart';
+import 'package:planner_app/components/alerts/add_workout_sidenote_alert.dart';
 import 'package:planner_app/entities/Workout.dart';
-import 'package:planner_app/services/firebase_managment.dart';
+import 'package:planner_app/services/firebase_management.dart';
 import 'package:planner_app/strings.dart';
 
 // ignore: must_be_immutable

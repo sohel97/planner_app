@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/components/alerts/remove_workout_alert.dart';
+import 'package:planner_app/screens/member_screens/pick_workout_schedule_for_user.dart';
+import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
+import 'package:planner_app/services/Calculations.dart';
 
 import '../../constants.dart';
 import '../../entities/Member.dart';
+import '../../strings.dart';
+import 'add_workout_schedule_for_user.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -36,46 +41,109 @@ class _MemberHistoryState extends State<MemberHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: new Column(
-        textDirection: kAppDirection,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
-            child: Center(
-              child: Text(
-                widget.member.getFullname(),
-                style: kLargeButtonTextStyle,
-              ),
+    return new Column(
+      textDirection: kAppDirection,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
+          child: Center(
+            child: Text(
+              widget.member.getFullname(),
+              style: kLargeButtonTextStyle,
             ),
           ),
-          new Expanded(
-            child: ListView(
-              children: <Widget>[
-                for (WorkoutPlan plan in widget.member.plansHistory)
-                  //TODO make nicer look
-                  ListTile(
-                    title: Text(plan.planName),
-                    subtitle: Text(plan.endDate.toIso8601String() +
-                        "\n" +
-                        plan.startDate.toIso8601String()),
-                    trailing: Text(plan.endDate.toIso8601String()),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.member.plansHistory.length,
+            itemBuilder: (context, position) {
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditWorkoutSchedulePage(
+                                widget.member.plansHistory.elementAt(position),
+                              )));
+                },
+                onLongPress: () {
+                  questionAlert(
+                      context: context,
+                      label: sDeleteWorkoutPlanQuestion,
+                      callback: () {
+                        setState(() {
+                          widget.member.plansHistory.remove(
+                              widget.member.plansHistory.elementAt(position));
+                          //TODO SAVE TO FIREBASE
+                          Navigator.of(context).pop();
+                        });
+                      });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListTile(
+                    leading: Text(
+                      widget.member.plansHistory.elementAt(position).planName,
+                      style: TextStyle(fontSize: 22.0),
+                    ),
+                    subtitle: Text(
+                      widget.member.plansHistory
+                          .elementAt(position)
+                          .planDescription,
+                    ),
+                    trailing: Text(
+                      convertDate(widget.member.plansHistory
+                          .elementAt(position)
+                          .startDate),
+                    ),
                   ),
-              ],
-            ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => AddWorkoutScheduleToUserPage()));
-        },
-        child: Icon(Icons.add),
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            color: kButtonsColor,
+            child: Text(
+              sAddPremadePlan,
+              style: kLargeButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                      builder: (context) => PickWorkoutScheduleForUser(
+                            userPlans: widget.member.plansHistory,
+                          )))
+                  .then((ans) {
+                setState(() {});
+              });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            color: kButtonsColor,
+            child: Text(
+              sAddCustomPlan,
+              style: kLargeButtonTextStyle,
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                      builder: (context) => AddWorkoutScheduleForUser(
+                            plans: widget.member.plansHistory,
+                          )))
+                  .then((ans) {
+                setState(() {});
+              });
+            },
+          ),
+        ),
+      ],
     );
   }
 }

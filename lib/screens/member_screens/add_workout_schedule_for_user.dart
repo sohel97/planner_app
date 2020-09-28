@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/scroll_nav_item.dart';
 import 'package:planner_app/constants.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
@@ -26,14 +27,17 @@ List<NavigationModel> navigationItems = [
   NavigationModel(title: sDaySeven, icon: Icons.filter_7),
 ];
 
-class AddWorkoutSchedulePage extends StatefulWidget {
+class AddWorkoutScheduleForUser extends StatefulWidget {
+  final List<WorkoutPlan> plans;
+
+  const AddWorkoutScheduleForUser({Key key, this.plans}) : super(key: key);
   @override
-  AddWorkoutSchedulePageState createState() {
-    return new AddWorkoutSchedulePageState();
+  AddWorkoutScheduleForUserState createState() {
+    return new AddWorkoutScheduleForUserState();
   }
 }
 
-class AddWorkoutSchedulePageState extends State<AddWorkoutSchedulePage>
+class AddWorkoutScheduleForUserState extends State<AddWorkoutScheduleForUser>
     with SingleTickerProviderStateMixin {
   WorkoutPlan plan;
   double maxWidth = 210;
@@ -91,7 +95,18 @@ class AddWorkoutSchedulePageState extends State<AddWorkoutSchedulePage>
             ),
             tooltip: sSave,
             onPressed: () {
-              addAsAPremadePlan(plan);
+              widget.plans.add(plan);
+              questionAlert(
+                  context: context,
+                  label: sAddAsPremadeWorkout,
+                  callback: () {
+                    addAsAPremadePlan(plan);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  cancelCallback: () {
+                    Navigator.of(context).pop();
+                  });
             },
           ),
         ],

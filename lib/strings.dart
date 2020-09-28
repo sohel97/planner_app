@@ -20,9 +20,15 @@ String sPlanName = 'اسم البرنامج';
 String sDescription = 'شرح';
 String sPlanDuration = 'مدة البرنامج';
 String sDeleteWorkoutQuestion = 'هل انت متاكد انك تريد ازالة التمرين؟';
+String sDeleteWorkoutPlanQuestion =
+    'هل انت متاكد انك تريد ازالة برنامج التمرين؟';
 String sWorkoutDuration = 'مدة التمرين بالدقائق';
 String sMinute = 'دقيقة';
 String sWorkoutRibs = 'عدد الدخلات';
+String sMemberData = 'معلومات المشترك';
+String sAddCustomPlan = 'اضافة برنامج جديد';
+String sAddPremadePlan = 'اضافة برنامج من القائمة';
+String sAddAsPremadeWorkout = 'اضافة البرنامج الى قائمة البرامج الجاهزة';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';
@@ -85,6 +91,7 @@ String sIdNumber = 'رقم الهوية';
 String sHealthApproval = "تصريح طبي";
 String sMembershipStartDate = "بدأ الاشتراك";
 String sMembershipEndfDate = "نهاية الاشتراك";
+String sPlanEndfDate = "نهاية البرنامج";
 
 /// ***************************Payment Strings**********************************/
 String sShekel = "₪";

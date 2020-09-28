@@ -1,11 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/screens/member_screens/member_history.dart';
 import 'package:planner_app/screens/member_screens/search_member_page.dart';
 import 'package:planner_app/screens/planning_screens/premade_plans_page.dart';
 import 'package:planner_app/strings.dart';
 
 import 'constants.dart';
+import 'entities/Member.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -66,7 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
     SearchMemberPage(),
     Container(),
     PremadePlansPage(),
-    // PremadePlansPage(),
+    MemberHistory(
+        member: new Member(
+      firstName: 'sohel',
+      lastName: 'kanaan',
+      id: '318303898',
+      plansHistory: new List<WorkoutPlan>(),
+    )),
   ];
 
   @override
@@ -75,11 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(
           sAppName,
-          textDirection: TextDirection.rtl,
+          textDirection: kAppDirection,
         ),
         centerTitle: true,
       ),
-      body: _children[_selectedIndex],
+      body: Directionality(
+        child: _children[_selectedIndex],
+        textDirection: kAppDirection,
+      ),
       bottomNavigationBar: new BottomNavigationBar(
           unselectedItemColor: Colors.grey,
           currentIndex: _selectedIndex,
@@ -96,6 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
             new BottomNavigationBarItem(
               icon: const Icon(Icons.fitness_center),
               title: new Text(sTrainingSchedules),
+            ),
+            new BottomNavigationBarItem(
+              icon: const Icon(Icons.remove_circle_outline),
+              title: new Text('TEMP'),
             ),
           ]),
     );

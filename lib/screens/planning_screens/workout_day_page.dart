@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:planner_app/components/remove_workout_alert.dart';
-import 'package:planner_app/components/show_workout_alert.dart';
+import 'package:planner_app/components/alerts/remove_workout_alert.dart';
+import 'package:planner_app/components/alerts/show_workout_alert.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutDay.dart';
 import 'package:planner_app/entities/WorkoutMuscleItem.dart';

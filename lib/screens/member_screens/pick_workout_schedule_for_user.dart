@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
-import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
-import 'add_workout_schedule_page.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -21,12 +19,17 @@ import 'add_workout_schedule_page.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 
-class PremadePlansPage extends StatefulWidget {
+class PickWorkoutScheduleForUser extends StatefulWidget {
+  final List<WorkoutPlan> userPlans;
+
+  const PickWorkoutScheduleForUser({Key key, this.userPlans}) : super(key: key);
   @override
-  _PremadePlansPageState createState() => new _PremadePlansPageState();
+  _PickWorkoutScheduleForUserState createState() =>
+      new _PickWorkoutScheduleForUserState();
 }
 
-class _PremadePlansPageState extends State<PremadePlansPage> {
+class _PickWorkoutScheduleForUserState
+    extends State<PickWorkoutScheduleForUser> {
   TextEditingController controller = new TextEditingController();
   List<WorkoutPlan> plans;
   @override
@@ -46,11 +49,8 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
             itemBuilder: (context, position) {
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditWorkoutSchedulePage(
-                              plans.elementAt(position))));
+                  widget.userPlans.add(plans.elementAt(position));
+                  Navigator.of(context).pop();
                 },
                 child: Card(
                   child: Padding(
@@ -65,15 +65,6 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
             },
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddWorkoutSchedulePage()));
-        },
-        child: Icon(Icons.add),
       ),
     );
   }

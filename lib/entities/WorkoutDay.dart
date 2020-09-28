@@ -1,7 +1,6 @@
 import 'package:planner_app/entities/Workout.dart';
 
 import 'WorkoutMuscleItem.dart';
-import 'WorkoutMuscleItem.dart';
 
 /*----------------------------------------------------------------------------\
 |

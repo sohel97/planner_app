@@ -1,5 +1,6 @@
-import 'WorkoutDay.dart';
 import 'package:planner_app/services/calculations.dart';
+
+import 'WorkoutDay.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -36,6 +37,7 @@ class WorkoutPlan {
     daySix = new WorkoutDay();
     daySeven = new WorkoutDay();
     startDate = DateTime.now();
+    endDate = DateTime.now();
     endDate.add(new Duration(days: days));
   }
 

@@ -4,7 +4,7 @@ import 'package:planner_app/constants.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/screens/planning_screens/workout_day_page.dart';
 import 'package:planner_app/screens/planning_screens/workout_information_page.dart';
-import 'package:planner_app/services/firebase_managment.dart';
+import 'package:planner_app/services/firebase_management.dart';
 
 import '../../strings.dart';
 

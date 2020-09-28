@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/Workout.dart';
 
-import '../constants.dart';
-import '../strings.dart';
+import '../../constants.dart';
+import '../../strings.dart';
 
 void addWorkoutSideNote({context, Workout workout, List<Workout> workouts}) {
   showDialog(

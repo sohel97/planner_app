@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/constants.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/services/validators.dart';
 
 import '../../strings.dart';
 
 class WorkoutInformationPage extends StatefulWidget {
   final WorkoutPlan workoutPlan;
+  final GlobalKey<FormState> key;
   WorkoutInformationPage({
     this.workoutPlan,
+    this.key,
   });
 
   @override
@@ -29,7 +32,8 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
           textDirection: kAppDirection,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+            child: TextFormField(
+              validator: textFieldValidator,
               decoration: InputDecoration(labelText: sPlanName),
               onChanged: (text) {
                 setState(() {
@@ -43,7 +47,8 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
           textDirection: kAppDirection,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+            child: TextFormField(
+              validator: textFieldValidator,
               decoration: InputDecoration(labelText: sDescription),
               onChanged: (text) {
                 setState(() {
