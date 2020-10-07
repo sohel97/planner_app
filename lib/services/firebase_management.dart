@@ -1,7 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:planner_app/components/Alert.dart';
 import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
+
+import 'Calculations.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -20,7 +26,7 @@ import 'package:planner_app/entities/WorkoutPlan.dart';
 //TODO this
 enum OrderBy { WillExpireSoon, Expired, Freezed }
 final ref = FirebaseDatabase().reference().child("Planners");
-
+List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
 getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
   return ref.child("Customers").once().then((DataSnapshot snapshot) {
     List<Member> members = new List<Member>();
@@ -29,6 +35,7 @@ getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
 
       mapOfMaps.values.forEach((value) {
+        print(Map.from(value));
         members.add(Member.fromMember(Map.from(value)));
       });
     }
@@ -62,6 +69,24 @@ getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
    */
 }
 
+Future<MapEntry<String, dynamic>> checkPhoneNumber(
+    String phoneNumber, BuildContext context) async {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  return ref
+      .orderByChild("phoneNumber")
+      .equalTo(phoneNumber)
+      .once()
+      .then((DataSnapshot snapshot) {
+    if (snapshot.value != null) {
+      Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
+      //print("found!");
+      return mapOfMaps.entries.toList()[0];
+    }
+    //showAlertDialog(context, "User Not Found!");
+    return null;
+  });
+}
+
 addPlanToCustomer(WorkoutPlan plan, Member member) {
   member.addNewPlan(plan);
   ref
@@ -73,11 +98,21 @@ addPlanToCustomer(WorkoutPlan plan, Member member) {
 
 //TODO this
 getAllPremadePlans() {
-  List<WorkoutPlan> plans = new List<WorkoutPlan>();
-  plans.add(new WorkoutPlan(planName: 'برنامج مبتدئين'));
-  plans.add(new WorkoutPlan(planName: 'برنامج للنزول بالوزن'));
-  plans.add(new WorkoutPlan(planName: 'برنامج متقدمين'));
-  return plans;
+  /*
+  premadePlans.add(new WorkoutPlan(planName: 'برنامج مبتدئين'));
+  premadePlans.add(new WorkoutPlan(planName: 'برنامج للنزول بالوزن'));
+  premadePlans.add(new WorkoutPlan(planName: 'برنامج متقدمين'));
+   */
+  ref.child("premadePlans").set(getJsonOfArr(premadePlans));
+  return premadePlans;
+}
+
+Member getMemberInfoFromFirebase() {
+  Member member = new Member();
+  member.firstName = "sohel";
+  member.lastName = "kanaan";
+
+  return member;
 }
 
 //TODO this
@@ -111,5 +146,10 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
 }
 
 //TODO
-addAsAPremadePlan(WorkoutPlan plan) {}
+addAsAPremadePlan(WorkoutPlan plan) {
+  premadePlans.add(plan);
+
+  ref.child("305180309").child("premadePlans").update(plan.getJson());
+}
+
 void updatePremadePlan(WorkoutPlan plan) {}

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
-import 'WorkoutPlan.dart';
+import 'package:planner_app/entities/WorkoutPlan.dart';
 
 /*----------------------------------------------------------------------------\
 |
@@ -17,16 +16,15 @@ import 'WorkoutPlan.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 
-class Member {
+class Planner {
   String firstName;
   String lastName;
   String id;
-  List<WorkoutPlan> plansHistory;
-  WorkoutPlan currentPlan;
-  Member(
+  List<WorkoutPlan> plans;
+  Planner(
       {@required this.firstName,
       @required this.lastName,
-      @required this.plansHistory,
+      @required this.plans,
       @required this.id});
 
   String getFullname() {
@@ -34,11 +32,7 @@ class Member {
   }
 
   addNewPlan(WorkoutPlan newPlan) {
-    plansHistory.add(newPlan);
-  }
-
-  getCurrentPlanJson() {
-    return currentPlan.getJson();
+    plans.add(newPlan);
   }
 
   getJson() {
@@ -46,34 +40,29 @@ class Member {
     json["firstName"] = this.firstName;
     json["lastName"] = this.lastName;
     var plansHistory = {};
-    for (WorkoutPlan plan in this.plansHistory) {
+    for (WorkoutPlan plan in this.plans) {
       plansHistory[plan.getKey()] = plan.getJson();
     }
-    json["plansHistory"] = plansHistory;
+    json["plans"] = plansHistory;
     return json;
   }
 
   getPlansHistoryJson() {
     var plansHistory = {};
-    for (WorkoutPlan plan in this.plansHistory) {
+    for (WorkoutPlan plan in this.plans) {
       plansHistory[plan.getKey()] = plan.getJson();
     }
     return plansHistory;
   }
 
-  Member.fromMember(var json) {
+  Planner.fromPlanner(var json) {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];
-    if (json["plansHistory"] != 0) {
-      var plansHistory = json["plansHistory"];
-      Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
-      mapOfMaps.values.forEach((value) {
-        this.plansHistory.add(new WorkoutPlan.getFromJson(Map.from(value)));
-      });
-      this.plansHistory.sort((a, b) => a.endDate.compareTo(b.endDate));
-      currentPlan = plansHistory[0];
-    } else {
-      this.plansHistory = [];
-    }
+    var plansHistory = json["plans"];
+    Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
+    mapOfMaps.values.forEach((value) {
+      this.plans.add(new WorkoutPlan.getFromJson(Map.from(value)));
+    });
+    this.plans.sort((a, b) => a.endDate.compareTo(b.endDate));
   }
 }

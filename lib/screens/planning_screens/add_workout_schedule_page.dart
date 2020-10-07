@@ -91,7 +91,12 @@ class AddWorkoutSchedulePageState extends State<AddWorkoutSchedulePage>
             ),
             tooltip: sSave,
             onPressed: () {
+              plan.planDescription = plan.planDescription == ""
+                  ? "untitled"
+                  : plan.planDescription;
+              plan.planName = plan.planName == "" ? "untitled" : plan.planName;
               addAsAPremadePlan(plan);
+              Navigator.pop(context);
             },
           ),
         ],

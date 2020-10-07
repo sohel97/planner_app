@@ -33,7 +33,7 @@ class MemberTile extends StatelessWidget {
               child: new ListTile(
                 //TODO: change if needed for firebase use
                 leading: new Text(member.getFullname()),
-                trailing: Text(member.id),
+                trailing: Text("member.id"),
               ),
             ),
           ),

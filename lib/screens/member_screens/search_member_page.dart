@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/member_tile.dart';
 import 'package:planner_app/screens/member_screens/member_history.dart';
+import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
 import '../../entities/Member.dart';
@@ -66,25 +67,36 @@ class _SearchMemberPageState extends State<SearchMemberPage> {
           ),
         ),
         new Expanded(
-          //TODO future builder and implement search method
-          child: ListView(
-            children: <Widget>[
-              for (Member member in new List<Member>())
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MemberHistory(member: member)));
-                  },
-                  child: MemberTile(
-                    member: member,
-                  ),
-                ),
-            ],
-          ),
-        ),
+            //TODO future builder and implement search method
+            child: FutureBuilder(
+                future: getPlanerMembers(text: searchText),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      return ListView(
+                        children: <Widget>[
+                          for (Member member in snapshot.data)
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MemberHistory(member: member)));
+                              },
+                              child: MemberTile(
+                                member: member,
+                              ),
+                            ),
+                        ],
+                      );
+                    case ConnectionState.none:
+                    case ConnectionState.active:
+                    case ConnectionState.waiting:
+                    default:
+                      return new ListView();
+                  }
+                })),
       ],
     );
   }

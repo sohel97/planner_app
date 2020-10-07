@@ -69,9 +69,14 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddWorkoutSchedulePage()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddWorkoutSchedulePage()))
+              .then((value) {
+            setState(
+              () {},
+            );
+          });
         },
         child: Icon(Icons.add),
       ),

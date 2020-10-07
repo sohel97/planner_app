@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:planner_app/services/calculations.dart';
 
 import 'WorkoutDay.dart';
@@ -17,6 +19,7 @@ import 'WorkoutDay.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 class WorkoutPlan {
+  String planner;
   String planName;
   String planDescription = "";
   WorkoutDay dayOne;
@@ -42,6 +45,7 @@ class WorkoutPlan {
   }
 
   WorkoutPlan.getFromJson(var json) {
+    planner = json["planner"];
     planName = json["planName"];
     planDescription = json["planDescription"];
     dayOne = WorkoutDay.getFromJson(json["dayOne"]);
@@ -65,7 +69,9 @@ class WorkoutPlan {
         "|" +
         endDate.minute.toString() +
         "|" +
-        endDate.second.toString();
+        endDate.second.toString() +
+        "|RandomNum:" +
+        (new Random()).nextInt(100).toString();
     return key;
   }
 
@@ -73,6 +79,7 @@ class WorkoutPlan {
     return {
       "planName": planName,
       "planDescription": planDescription,
+      "planner": planner,
       "startDate": convertDate(startDate),
       "endDate": convertDate(endDate),
       "day1": dayOne.getJson(),
