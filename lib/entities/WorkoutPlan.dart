@@ -45,16 +45,16 @@ class WorkoutPlan {
   }
 
   WorkoutPlan.getFromJson(var json) {
-    planner = json["planner"];
+    planner = "planner"; //json["planner"];
     planName = json["planName"];
     planDescription = json["planDescription"];
-    dayOne = WorkoutDay.getFromJson(json["dayOne"]);
-    dayTwo = WorkoutDay.getFromJson(json["dayTwo"]);
-    dayThree = WorkoutDay.getFromJson(json["dayThree"]);
-    dayFour = WorkoutDay.getFromJson(json["dayFour"]);
-    dayFive = WorkoutDay.getFromJson(json["dayFive"]);
-    daySix = WorkoutDay.getFromJson(json["daySix"]);
-    daySeven = WorkoutDay.getFromJson(json["daySeven"]);
+    dayOne = WorkoutDay.getFromJson(json["day1"]);
+    dayTwo = WorkoutDay.getFromJson(json["day2"]);
+    dayThree = WorkoutDay.getFromJson(json["day3"]);
+    dayFour = WorkoutDay.getFromJson(json["day4"]);
+    dayFive = WorkoutDay.getFromJson(json["day5"]);
+    daySix = WorkoutDay.getFromJson(json["day6"]);
+    daySeven = WorkoutDay.getFromJson(json["day7"]);
     startDate = DateTime.parse(json["startDate"]);
     endDate = DateTime.parse(json["endDate"]);
   }

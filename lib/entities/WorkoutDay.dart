@@ -17,7 +17,7 @@ import 'WorkoutMuscleItem.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 class WorkoutDay {
-  List<WorkoutMuscleItem> workouts;
+  List<WorkoutMuscleItem> workouts = new List<WorkoutMuscleItem>();
   bool restDay;
   WorkoutDay() {
     //TODO add names to String.dart
@@ -71,8 +71,10 @@ class WorkoutDay {
   WorkoutDay.getFromJson(var json) {
     restDay = json["restDay"];
     var workouts = json["workouts"];
-    Map<String, dynamic> mapOfMaps = Map.from(workouts);
-    mapOfMaps.values.forEach((value) {
+    List<dynamic> mapOfMaps = workouts;
+    mapOfMaps = mapOfMaps.where((element) => element != null).toList();
+    //print(mapOfMaps);
+    mapOfMaps.forEach((value) {
       this.workouts.add(new WorkoutMuscleItem.getFromJson(Map.from(value)));
     });
   }

@@ -20,7 +20,7 @@ class Planner {
   String firstName;
   String lastName;
   String id;
-  List<WorkoutPlan> plans;
+  List<WorkoutPlan> plans = new List<WorkoutPlan>();
   Planner(
       {@required this.firstName,
       @required this.lastName,
@@ -58,7 +58,8 @@ class Planner {
   Planner.fromPlanner(var json) {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];
-    var plansHistory = json["plans"];
+    this.id = json["idNumber"];
+    var plansHistory = json["PremadePlan"];
     Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
     mapOfMaps.values.forEach((value) {
       this.plans.add(new WorkoutPlan.getFromJson(Map.from(value)));

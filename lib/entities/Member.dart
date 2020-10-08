@@ -64,7 +64,7 @@ class Member {
   Member.fromMember(var json) {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];
-    if (json["plansHistory"] != 0) {
+    if (json["plansHistory"] != null && json["plansHistory"] != 0) {
       var plansHistory = json["plansHistory"];
       Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
       mapOfMaps.values.forEach((value) {

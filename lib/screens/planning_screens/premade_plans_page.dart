@@ -22,6 +22,8 @@ import 'add_workout_schedule_page.dart';
 /---------------------------------------------------------------------------- */
 
 class PremadePlansPage extends StatefulWidget {
+  PremadePlansPage({Key key, this.userJsn}) : super(key: key);
+  MapEntry<String, dynamic> userJsn;
   @override
   _PremadePlansPageState createState() => new _PremadePlansPageState();
 }
@@ -31,7 +33,6 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
   List<WorkoutPlan> plans;
   @override
   void initState() {
-    plans = getAllPremadePlans();
     super.initState();
   }
 
@@ -41,29 +42,42 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
       body: Container(
         child: Directionality(
           textDirection: kAppDirection,
-          child: ListView.builder(
-            itemCount: plans.length,
-            itemBuilder: (context, position) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditWorkoutSchedulePage(
-                              plans.elementAt(position))));
-                },
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      plans.elementAt(position).planName,
-                      style: TextStyle(fontSize: 22.0),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+          child: FutureBuilder(
+              future: getAllPremadePlans(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.done:
+                    return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, position) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditWorkoutSchedulePage(snapshot.data
+                                            .elementAt(position))));
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                snapshot.data.elementAt(position).planName,
+                                style: TextStyle(fontSize: 22.0),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  case ConnectionState.none:
+                  case ConnectionState.active:
+                  case ConnectionState.waiting:
+                  default:
+                    return new ListView();
+                }
+              }),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -6,6 +6,8 @@ import 'package:planner_app/components/Alert.dart';
 import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/screens/SignIn.dart';
+import 'package:planner_app/services/Planner.dart';
 
 import 'Calculations.dart';
 
@@ -26,8 +28,9 @@ import 'Calculations.dart';
 //TODO this
 enum OrderBy { WillExpireSoon, Expired, Freezed }
 final ref = FirebaseDatabase().reference().child("Planners");
-List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
-getPlanerMembers({OrderBy orderBy, int days, String text = ""}) {
+
+Future<List<Member>> getPlanerMembers(
+    {OrderBy orderBy, int days, String text = ""}) {
   return ref.child("Customers").once().then((DataSnapshot snapshot) {
     List<Member> members = new List<Member>();
 
@@ -79,7 +82,8 @@ Future<MapEntry<String, dynamic>> checkPhoneNumber(
       .then((DataSnapshot snapshot) {
     if (snapshot.value != null) {
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
-      //print("found!");
+      print(mapOfMaps.entries.toList()[0].value);
+
       return mapOfMaps.entries.toList()[0];
     }
     //showAlertDialog(context, "User Not Found!");
@@ -97,22 +101,32 @@ addPlanToCustomer(WorkoutPlan plan, Member member) {
 }
 
 //TODO this
-getAllPremadePlans() {
+Future<List<WorkoutPlan>> getAllPremadePlans(
+    {MapEntry<String, dynamic> usrJson}) {
   /*
   premadePlans.add(new WorkoutPlan(planName: 'برنامج مبتدئين'));
   premadePlans.add(new WorkoutPlan(planName: 'برنامج للنزول بالوزن'));
   premadePlans.add(new WorkoutPlan(planName: 'برنامج متقدمين'));
-   */
   ref.child("premadePlans").set(getJsonOfArr(premadePlans));
-  return premadePlans;
-}
-
-Member getMemberInfoFromFirebase() {
-  Member member = new Member();
-  member.firstName = "sohel";
-  member.lastName = "kanaan";
-
-  return member;
+   */
+  print("the id ${SignIn.planner.id}");
+  return ref
+      .child(SignIn.planner.id)
+      .child("PremadePlan")
+      .once()
+      .then((DataSnapshot snapshot) {
+    List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
+    print("Still!");
+    if (snapshot.value != null) {
+      Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
+      print("Not Null!");
+      mapOfMaps.values.forEach((value) {
+        premadePlans.add(WorkoutPlan.getFromJson(Map.from(value)));
+      });
+      return premadePlans;
+    }
+    return null;
+  });
 }
 
 //TODO this
@@ -147,9 +161,7 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
 
 //TODO
 addAsAPremadePlan(WorkoutPlan plan) {
-  premadePlans.add(plan);
-
-  ref.child("305180309").child("premadePlans").update(plan.getJson());
+  ref.child(SignIn.planner.id).child("premadePlans").update(plan.getJson());
 }
 
 void updatePremadePlan(WorkoutPlan plan) {}

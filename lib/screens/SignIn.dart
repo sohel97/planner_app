@@ -3,22 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/Alert.dart';
 import 'package:planner_app/entities/Member.dart';
+import 'package:planner_app/services/Planner.dart';
 import 'package:planner_app/services/firebase_management.dart';
 import 'package:planner_app/main.dart';
 
 class SignIn extends StatefulWidget {
+  static Planner planner;
   @override
   MapScreenState createState() => MapScreenState();
 }
 
 class MapScreenState extends State<SignIn> {
-  Member member;
   String phoneNumber;
   String message = "";
   @override
   void initState() {
-    member = getMemberInfoFromFirebase();
-
     // TODO: implement initState
     super.initState();
   }
@@ -50,7 +49,10 @@ class MapScreenState extends State<SignIn> {
                             await auth
                                 .signInWithCredential(credential)
                                 .then((value) {
-                              print("success!");
+                              SignIn.planner =
+                                  Planner.fromPlanner(userJsn.value);
+                              print(
+                                  "Planner first name ${SignIn.planner.firstName}");
                               Navigator.of(context).pop();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
@@ -65,7 +67,9 @@ class MapScreenState extends State<SignIn> {
                           },
                           codeSent:
                               (String verificationId, int resendToken) async {
-                            print("success!");
+                            SignIn.planner = Planner.fromPlanner(userJsn.value);
+                            print(
+                                "Planner first name ${SignIn.planner.firstName}");
                             Navigator.of(context).pop();
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>

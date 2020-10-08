@@ -16,9 +16,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   initState() {
     Firebase.initializeApp();
+    //irebaseAuth.instance.signOut();
     currentUser = FirebaseAuth.instance.currentUser;
     super.initState();
-    //FirebaseAuth.instance.signOut();
+
     if (currentUser == null) {
       new Future.delayed(const Duration(seconds: 2),
           () => Navigator.pushReplacementNamed(context, "/login"));
