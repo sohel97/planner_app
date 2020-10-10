@@ -19,8 +19,8 @@ import 'WorkoutDay.dart';
 |  31-Aug-20 Alpha    Sohel   $$1     Created
 /---------------------------------------------------------------------------- */
 class WorkoutPlan {
-  String planner;
-  String planName;
+  String planner = "planner";
+  String planName = "";
   String planDescription = "";
   WorkoutDay dayOne;
   WorkoutDay dayTwo;
@@ -31,6 +31,7 @@ class WorkoutPlan {
   WorkoutDay daySeven;
   DateTime startDate;
   DateTime endDate = DateTime.now();
+  String key = "";
   WorkoutPlan({this.planName, int days = 30}) {
     dayOne = new WorkoutDay();
     dayTwo = new WorkoutDay();
@@ -44,7 +45,8 @@ class WorkoutPlan {
     endDate.add(new Duration(days: days));
   }
 
-  WorkoutPlan.getFromJson(var json) {
+  WorkoutPlan.getFromJson(var json, String key) {
+    this.key = key;
     planner = "planner"; //json["planner"];
     planName = json["planName"];
     planDescription = json["planDescription"];
@@ -59,7 +61,8 @@ class WorkoutPlan {
     endDate = DateTime.parse(json["endDate"]);
   }
   String getKey() {
-    var key = endDate.year.toString() +
+    if (key != "") return key;
+    key = endDate.year.toString() +
         "|" +
         endDate.month.toString() +
         "|" +
@@ -77,11 +80,11 @@ class WorkoutPlan {
 
   getJson() {
     return {
-      "planName": planName,
+      "planName": planName == null ? "untitled" : planName,
       "planDescription": planDescription,
       "planner": planner,
-      "startDate": convertDate(startDate),
-      "endDate": convertDate(endDate),
+      "startDate": startDate.toString(),
+      "endDate": endDate.toString(),
       "day1": dayOne.getJson(),
       "day2": dayTwo.getJson(),
       "day3": dayThree.getJson(),

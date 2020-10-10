@@ -28,7 +28,7 @@ import 'Calculations.dart';
 //TODO this
 enum OrderBy { WillExpireSoon, Expired, Freezed }
 final ref = FirebaseDatabase().reference().child("Planners");
-
+List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
 Future<List<Member>> getPlanerMembers(
     {OrderBy orderBy, int days, String text = ""}) {
   return ref.child("Customers").once().then((DataSnapshot snapshot) {
@@ -46,30 +46,6 @@ Future<List<Member>> getPlanerMembers(
     print("the length:${members.length}");
     return members;
   });
-  /*
-  List<WorkoutPlan> plans = new List<WorkoutPlan>();
-  List<Member> members = new List<Member>();
-  members.add(Member(
-    firstName: 'sohel',
-    lastName: 'kanaan',
-    plansHistory: plans,
-    id: '318303898',
-  ));
-  members.add(Member(
-    firstName: 'ameer',
-    lastName: 'ganeem',
-    plansHistory: plans,
-    id: '315825814',
-  ));
-  members.add(Member(
-    firstName: 'yousef',
-    lastName: 'khatib',
-    plansHistory: plans,
-    id: '207515825',
-  ));
-
-  return members;
-   */
 }
 
 Future<MapEntry<String, dynamic>> checkPhoneNumber(
@@ -112,16 +88,15 @@ Future<List<WorkoutPlan>> getAllPremadePlans(
   print("the id ${SignIn.planner.id}");
   return ref
       .child(SignIn.planner.id)
-      .child("PremadePlan")
+      .child("PremadePlans")
       .once()
       .then((DataSnapshot snapshot) {
-    List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
-    print("Still!");
     if (snapshot.value != null) {
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
-      print("Not Null!");
-      mapOfMaps.values.forEach((value) {
-        premadePlans.add(WorkoutPlan.getFromJson(Map.from(value)));
+      premadePlans.clear();
+      mapOfMaps.entries.forEach((entry) {
+        premadePlans
+            .add(WorkoutPlan.getFromJson(Map.from(entry.value), entry.key));
       });
       return premadePlans;
     }
@@ -161,7 +136,18 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
 
 //TODO
 addAsAPremadePlan(WorkoutPlan plan) {
-  ref.child(SignIn.planner.id).child("premadePlans").update(plan.getJson());
+  String key = plan.getKey();
+
+  ref
+      .child(SignIn.planner.id)
+      .child("PremadePlans")
+      .update({key: plan.getJson()});
 }
 
-void updatePremadePlan(WorkoutPlan plan) {}
+void updatePremadePlan(WorkoutPlan plan) {
+  String key = plan.getKey();
+  ref
+      .child(SignIn.planner.id)
+      .child("PremadePlans")
+      .update({key: plan.getJson()});
+}

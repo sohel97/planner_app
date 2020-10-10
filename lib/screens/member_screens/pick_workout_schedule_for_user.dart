@@ -44,26 +44,39 @@ class _PickWorkoutScheduleForUserState
       body: Container(
         child: Directionality(
           textDirection: kAppDirection,
-          child: ListView.builder(
-            itemCount: plans.length,
-            itemBuilder: (context, position) {
-              return InkWell(
-                onTap: () {
-                  widget.userPlans.add(plans.elementAt(position));
-                  Navigator.of(context).pop();
-                },
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      plans.elementAt(position).planName,
-                      style: TextStyle(fontSize: 22.0),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+          child: FutureBuilder(
+              future: getAllPremadePlans(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.done:
+                    return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, position) {
+                        return InkWell(
+                          onTap: () {
+                            widget.userPlans
+                                .add(snapshot.data.elementAt(position));
+                            Navigator.of(context).pop();
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                snapshot.data.elementAt(position).planName,
+                                style: TextStyle(fontSize: 22.0),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  case ConnectionState.none:
+                  case ConnectionState.active:
+                  case ConnectionState.waiting:
+                  default:
+                    return new ListView();
+                }
+              }),
         ),
       ),
     );

@@ -67,8 +67,10 @@ class Member {
     if (json["plansHistory"] != null && json["plansHistory"] != 0) {
       var plansHistory = json["plansHistory"];
       Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
-      mapOfMaps.values.forEach((value) {
-        this.plansHistory.add(new WorkoutPlan.getFromJson(Map.from(value)));
+      mapOfMaps.entries.forEach((entry) {
+        this
+            .plansHistory
+            .add(new WorkoutPlan.getFromJson(Map.from(entry.value), entry.key));
       });
       this.plansHistory.sort((a, b) => a.endDate.compareTo(b.endDate));
       currentPlan = plansHistory[0];

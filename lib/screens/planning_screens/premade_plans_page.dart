@@ -53,11 +53,13 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
                         return InkWell(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EditWorkoutSchedulePage(snapshot.data
-                                            .elementAt(position))));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditWorkoutSchedulePage(snapshot
+                                                .data
+                                                .elementAt(position))))
+                                .then((value) => setState(() {}));
                           },
                           child: Card(
                             child: Padding(

@@ -59,10 +59,12 @@ class Planner {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];
     this.id = json["idNumber"];
-    var plansHistory = json["PremadePlan"];
+    var plansHistory = json["PremadePlans"];
     Map<String, dynamic> mapOfMaps = Map.from(plansHistory);
-    mapOfMaps.values.forEach((value) {
-      this.plans.add(new WorkoutPlan.getFromJson(Map.from(value)));
+    mapOfMaps.entries.forEach((entry) {
+      this
+          .plans
+          .add(new WorkoutPlan.getFromJson(Map.from(entry.value), entry.key));
     });
     this.plans.sort((a, b) => a.endDate.compareTo(b.endDate));
   }
