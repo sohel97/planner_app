@@ -16,10 +16,18 @@ class _SplashPageState extends State<SplashPage> {
   @override
   initState() {
     Firebase.initializeApp();
-    //irebaseAuth.instance.signOut();
     currentUser = FirebaseAuth.instance.currentUser;
     super.initState();
+    checkPhoneNumber("+972537211790", context)
+        .then((MapEntry<String, dynamic> userJsn) {
+      if (userJsn != null) {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MyHomePage(userJsn: userJsn)));
+      }
+    });
 
+    // UNCOMMMENT TO ENABLE AUTH
+    /*
     if (currentUser == null) {
       new Future.delayed(const Duration(seconds: 2),
           () => Navigator.pushReplacementNamed(context, "/login"));
@@ -34,6 +42,8 @@ class _SplashPageState extends State<SplashPage> {
           Navigator.pushReplacementNamed(context, "/login");
         }
       });
+
+     */
     //new Future.delayed(const Duration(seconds: 2), () => checkUser());
   }
 
