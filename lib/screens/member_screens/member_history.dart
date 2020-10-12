@@ -41,109 +41,112 @@ class _MemberHistoryState extends State<MemberHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      textDirection: kAppDirection,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
-          child: Center(
-            child: Text(
-              widget.member.getFullname(),
-              style: kLargeButtonTextStyle,
+    return Scaffold(
+      body: new Column(
+        textDirection: kAppDirection,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
+            child: Center(
+              child: Text(
+                widget.member.getFullname(),
+                style: kLargeButtonTextStyle,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: widget.member.plansHistory.length,
-            itemBuilder: (context, position) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditWorkoutSchedulePage(
-                                widget.member.plansHistory.elementAt(position),
-                              )));
-                },
-                onLongPress: () {
-                  questionAlert(
-                      context: context,
-                      label: sDeleteWorkoutPlanQuestion,
-                      callback: () {
-                        setState(() {
-                          widget.member.plansHistory.remove(
-                              widget.member.plansHistory.elementAt(position));
-                          //TODO SAVE TO FIREBASE
-                          Navigator.of(context).pop();
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.member.plansHistory.length,
+              itemBuilder: (context, position) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditWorkoutSchedulePage(
+                                  widget.member.plansHistory
+                                      .elementAt(position),
+                                )));
+                  },
+                  onLongPress: () {
+                    questionAlert(
+                        context: context,
+                        label: sDeleteWorkoutPlanQuestion,
+                        callback: () {
+                          setState(() {
+                            widget.member.plansHistory.remove(
+                                widget.member.plansHistory.elementAt(position));
+                            //TODO SAVE TO FIREBASE
+                            Navigator.of(context).pop();
+                          });
                         });
-                      });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListTile(
-                    leading: Text(
-                      widget.member.plansHistory.elementAt(position).planName,
-                      style: TextStyle(fontSize: 22.0),
-                    ),
-                    subtitle: Text(
-                      widget.member.plansHistory
-                          .elementAt(position)
-                          .planDescription,
-                    ),
-                    trailing: Text(
-                      convertDate(widget.member.plansHistory
-                          .elementAt(position)
-                          .startDate),
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListTile(
+                      leading: Text(
+                        widget.member.plansHistory.elementAt(position).planName,
+                        style: TextStyle(fontSize: 22.0),
+                      ),
+                      subtitle: Text(
+                        widget.member.plansHistory
+                            .elementAt(position)
+                            .planDescription,
+                      ),
+                      trailing: Text(
+                        convertDate(widget.member.plansHistory
+                            .elementAt(position)
+                            .startDate),
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RaisedButton(
-            color: kButtonsColor,
-            child: Text(
-              sAddPremadePlan,
-              style: kLargeButtonTextStyle,
+                );
+              },
             ),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                      builder: (context) => PickWorkoutScheduleForUser(
-                            userPlans: widget.member.plansHistory,
-                          )))
-                  .then((ans) {
-                setState(() {});
-              });
-            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RaisedButton(
-            color: kButtonsColor,
-            child: Text(
-              sAddCustomPlan,
-              style: kLargeButtonTextStyle,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              color: kButtonsColor,
+              child: Text(
+                sAddPremadePlan,
+                style: kLargeButtonTextStyle,
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => PickWorkoutScheduleForUser(
+                              userPlans: widget.member.plansHistory,
+                            )))
+                    .then((ans) {
+                  setState(() {});
+                });
+              },
             ),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                      builder: (context) => AddWorkoutScheduleForUser(
-                            plans: widget.member.plansHistory,
-                          )))
-                  .then((ans) {
-                setState(() {});
-              });
-            },
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              color: kButtonsColor,
+              child: Text(
+                sAddCustomPlan,
+                style: kLargeButtonTextStyle,
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => AddWorkoutScheduleForUser(
+                              plans: widget.member.plansHistory,
+                            )))
+                    .then((ans) {
+                  setState(() {});
+                });
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
