@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:planner_app/main.dart';
+import 'package:planner_app/screens/SignIn.dart';
+import 'package:planner_app/services/Planner.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
 class SplashPage extends StatefulWidget {
@@ -21,6 +23,8 @@ class _SplashPageState extends State<SplashPage> {
     checkPhoneNumber("+972537211790", context)
         .then((MapEntry<String, dynamic> userJsn) {
       if (userJsn != null) {
+        SignIn.planner = Planner.fromPlanner(userJsn.value);
+
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyHomePage(userJsn: userJsn)));
       }
