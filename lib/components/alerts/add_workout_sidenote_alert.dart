@@ -84,6 +84,7 @@ class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
                           value: ribs.toDouble(),
                           min: 0,
                           max: 5,
+                          divisions: 5,
                           onChanged: (double newValue) {
                             setState(() {
                               ribs = newValue.round();

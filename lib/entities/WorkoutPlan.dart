@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:planner_app/services/calculations.dart';
-
 import 'WorkoutDay.dart';
 
 /*----------------------------------------------------------------------------\
@@ -96,6 +94,6 @@ class WorkoutPlan {
   }
 
   setEndDate(int duration) {
-    //TODO
+    endDate.add(new Duration(days: duration));
   }
 }

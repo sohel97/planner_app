@@ -18,9 +18,13 @@ class WorkoutInformationPage extends StatefulWidget {
 }
 
 class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
-  int duration = 0;
+  int duration;
   @override
   void initState() {
+    duration = widget.workoutPlan.startDate
+        .difference(widget.workoutPlan.endDate)
+        .inDays;
+    print(duration);
     super.initState();
   }
 
@@ -33,6 +37,9 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              initialValue: widget.workoutPlan.planName != null
+                  ? widget.workoutPlan.planName
+                  : '',
               validator: textFieldValidator,
               decoration: InputDecoration(labelText: sPlanName),
               onChanged: (text) {
@@ -49,6 +56,9 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               validator: textFieldValidator,
+              initialValue: widget.workoutPlan.planDescription != null
+                  ? widget.workoutPlan.planDescription
+                  : '',
               decoration: InputDecoration(labelText: sDescription),
               onChanged: (text) {
                 setState(() {

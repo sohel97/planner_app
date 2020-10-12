@@ -42,6 +42,7 @@ class _MemberHistoryState extends State<MemberHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: new Column(
         textDirection: kAppDirection,
         crossAxisAlignment: CrossAxisAlignment.stretch,
