@@ -21,8 +21,8 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
   int duration;
   @override
   void initState() {
-    duration = widget.workoutPlan.startDate
-        .difference(widget.workoutPlan.endDate)
+    duration = widget.workoutPlan.endDate
+        .difference(widget.workoutPlan.startDate)
         .inDays;
     print(duration);
     super.initState();
@@ -103,6 +103,7 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
                 onChanged: (double newValue) {
                   setState(() {
                     duration = newValue.round();
+                    print("adding duration ${duration}");
                     widget.workoutPlan.setEndDate(duration);
                   });
                 },

@@ -27,8 +27,9 @@ class WorkoutPlan {
   WorkoutDay dayFive;
   WorkoutDay daySix;
   WorkoutDay daySeven;
-  DateTime startDate;
+  DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
+  int duration = 0;
   String key = "";
   WorkoutPlan({this.planName, int days = 30}) {
     dayOne = new WorkoutDay();
@@ -39,8 +40,9 @@ class WorkoutPlan {
     daySix = new WorkoutDay();
     daySeven = new WorkoutDay();
     startDate = DateTime.now();
-    endDate = DateTime.now();
-    endDate.add(new Duration(days: days));
+    endDate = startDate;
+    endDate = startDate.add(new Duration(days: days));
+    duration = days;
   }
 
   WorkoutPlan.getFromJson(var json, String key) {
@@ -57,6 +59,7 @@ class WorkoutPlan {
     daySeven = WorkoutDay.getFromJson(json["day7"]);
     startDate = DateTime.parse(json["startDate"]);
     endDate = DateTime.parse(json["endDate"]);
+    duration = json["duration"];
   }
   String getKey() {
     if (key != "") return key;
@@ -83,6 +86,7 @@ class WorkoutPlan {
       "planner": planner,
       "startDate": startDate.toString(),
       "endDate": endDate.toString(),
+      "duration": duration,
       "day1": dayOne.getJson(),
       "day2": dayTwo.getJson(),
       "day3": dayThree.getJson(),
@@ -94,6 +98,6 @@ class WorkoutPlan {
   }
 
   setEndDate(int duration) {
-    endDate.add(new Duration(days: duration));
+    endDate = startDate.add(new Duration(days: duration));
   }
 }

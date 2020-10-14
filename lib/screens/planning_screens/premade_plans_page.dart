@@ -56,9 +56,10 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditWorkoutSchedulePage(snapshot
-                                                .data
-                                                .elementAt(position))))
+                                            EditWorkoutSchedulePage(
+                                                null,
+                                                snapshot.data
+                                                    .elementAt(position))))
                                 .then((value) => setState(() {}));
                           },
                           child: Card(

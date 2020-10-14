@@ -8,6 +8,7 @@ import 'package:planner_app/entities/Workout.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/screens/SignIn.dart';
 import 'package:planner_app/services/Planner.dart';
+import 'package:planner_app/strings.dart';
 
 import 'Calculations.dart';
 
@@ -38,7 +39,7 @@ Future<List<Member>> getPlanerMembers(
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
 
       mapOfMaps.values.forEach((value) {
-        print(Map.from(value));
+        //print(Map.from(value));
         members.add(Member.fromMember(Map.from(value)));
       });
     }
@@ -69,11 +70,12 @@ Future<MapEntry<String, dynamic>> checkPhoneNumber(
 
 addPlanToCustomer(WorkoutPlan plan, Member member) {
   member.addNewPlan(plan);
+  print(member.id);
   ref
       .child("Customers")
       .child(member.id)
       .child("plansHistory")
-      .update(member.getPlansHistoryJson());
+      .set(member.getPlansHistoryJson());
 }
 
 //TODO this
@@ -149,5 +151,14 @@ void updatePremadePlan(WorkoutPlan plan) {
   ref
       .child(SignIn.planner.id)
       .child("PremadePlans")
+      .update({key: plan.getJson()});
+}
+
+void updateUserPlan(WorkoutPlan plan, Member user) {
+  String key = plan.getKey();
+  ref
+      .child("Customers")
+      .child(user.id)
+      .child("plansHistory")
       .update({key: plan.getJson()});
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/strings.dart';
 
 /*----------------------------------------------------------------------------\
 |

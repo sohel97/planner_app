@@ -29,6 +29,7 @@ String sMemberData = 'معلومات المشترك';
 String sAddCustomPlan = 'اضافة برنامج جديد';
 String sAddPremadePlan = 'اضافة برنامج من القائمة';
 String sAddAsPremadeWorkout = 'اضافة البرنامج الى قائمة البرامج الجاهزة';
+String sPremadePlansDirection = 'Planners/premadePlans';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';

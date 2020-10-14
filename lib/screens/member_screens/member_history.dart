@@ -66,6 +66,7 @@ class _MemberHistoryState extends State<MemberHistory> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => EditWorkoutSchedulePage(
+                                  widget.member,
                                   widget.member.plansHistory
                                       .elementAt(position),
                                 )));
@@ -118,7 +119,7 @@ class _MemberHistoryState extends State<MemberHistory> {
                 Navigator.of(context)
                     .push(MaterialPageRoute(
                         builder: (context) => PickWorkoutScheduleForUser(
-                              userPlans: widget.member.plansHistory,
+                              user: widget.member,
                             )))
                     .then((ans) {
                   setState(() {});
@@ -138,7 +139,7 @@ class _MemberHistoryState extends State<MemberHistory> {
                 Navigator.of(context)
                     .push(MaterialPageRoute(
                         builder: (context) => AddWorkoutScheduleForUser(
-                              plans: widget.member.plansHistory,
+                              member: widget.member,
                             )))
                     .then((ans) {
                   setState(() {});

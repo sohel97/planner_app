@@ -21,7 +21,7 @@ class Member {
   String firstName;
   String lastName;
   String id;
-  List<WorkoutPlan> plansHistory;
+  List<WorkoutPlan> plansHistory = new List<WorkoutPlan>();
   WorkoutPlan currentPlan;
   Member(
       {@required this.firstName,
@@ -64,6 +64,7 @@ class Member {
   Member.fromMember(var json) {
     this.firstName = json["firstName"];
     this.lastName = json["lastName"];
+    this.id = json["idNumber"];
     if (json["plansHistory"] != null && json["plansHistory"] != 0) {
       var plansHistory = json["plansHistory"];
       Map<String, dynamic> mapOfMaps = Map.from(plansHistory);

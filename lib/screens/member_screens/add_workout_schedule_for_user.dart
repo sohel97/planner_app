@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/scroll_nav_item.dart';
 import 'package:planner_app/constants.dart';
+import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/screens/planning_screens/workout_day_page.dart';
 import 'package:planner_app/screens/planning_screens/workout_information_page.dart';
@@ -28,9 +29,9 @@ List<NavigationModel> navigationItems = [
 ];
 
 class AddWorkoutScheduleForUser extends StatefulWidget {
-  final List<WorkoutPlan> plans;
+  final Member member;
 
-  const AddWorkoutScheduleForUser({Key key, this.plans}) : super(key: key);
+  const AddWorkoutScheduleForUser({Key key, this.member}) : super(key: key);
   @override
   AddWorkoutScheduleForUserState createState() {
     return new AddWorkoutScheduleForUserState();
@@ -95,7 +96,7 @@ class AddWorkoutScheduleForUserState extends State<AddWorkoutScheduleForUser>
             ),
             tooltip: sSave,
             onPressed: () {
-              widget.plans.add(plan);
+              addPlanToCustomer(plan, widget.member);
               questionAlert(
                   context: context,
                   label: sAddAsPremadeWorkout,

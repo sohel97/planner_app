@@ -67,7 +67,6 @@ class _SearchMemberPageState extends State<SearchMemberPage> {
           ),
         ),
         new Expanded(
-            //TODO future builder and implement search method
             child: FutureBuilder(
                 future: getPlanerMembers(text: searchText),
                 builder: (context, snapshot) {

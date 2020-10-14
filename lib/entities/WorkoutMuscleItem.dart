@@ -33,17 +33,16 @@ class WorkoutMuscleItem {
   WorkoutMuscleItem.getFromJson(var json) {
     isExpanded = json["isExpanded"];
     header = json["header"];
-    /*
+    this.workouts = new List<Workout>();
     var workouts = json["workouts"];
-    Map<String, dynamic> mapOfMaps = Map.from(workouts);
-    mapOfMaps.values.forEach((value) {
-      this.workouts.add(new Workout.getFromJson(Map.from(value)));
-    });
+    if (workouts != null) {
+      workouts.forEach((value) {
+        if (value != null) this.workouts.add(new Workout.getFromJson(value));
+      });
+    }
 
-     */
     iconpic = json["iconpic"];
     type = stringToType[json["type"]];
-    this.workouts = new List<Workout>();
   }
 
   getJson() {

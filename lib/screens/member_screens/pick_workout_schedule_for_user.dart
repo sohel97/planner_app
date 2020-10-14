@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
@@ -20,9 +21,9 @@ import '../../constants.dart';
 /---------------------------------------------------------------------------- */
 
 class PickWorkoutScheduleForUser extends StatefulWidget {
-  final List<WorkoutPlan> userPlans;
+  final Member user;
 
-  const PickWorkoutScheduleForUser({Key key, this.userPlans}) : super(key: key);
+  const PickWorkoutScheduleForUser({Key key, this.user}) : super(key: key);
   @override
   _PickWorkoutScheduleForUserState createState() =>
       new _PickWorkoutScheduleForUserState();
@@ -54,8 +55,9 @@ class _PickWorkoutScheduleForUserState
                       itemBuilder: (context, position) {
                         return InkWell(
                           onTap: () {
-                            widget.userPlans
-                                .add(snapshot.data.elementAt(position));
+                            addPlanToCustomer(
+                                snapshot.data.elementAt(position), widget.user);
+                            //     widget.user.plansHistory.add(snapshot.data.elementAt(position));
                             Navigator.of(context).pop();
                           },
                           child: Card(
