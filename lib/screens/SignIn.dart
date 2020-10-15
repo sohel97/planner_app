@@ -63,7 +63,7 @@ class MapScreenState extends State<SignIn> {
                             print(e.toString());
                             print("ERROR!");
                             message = "Invalid Number";
-                            showAlertDialog(context, message);
+                            showAlertDialog(context, Text(message));
                           },
                           codeSent:
                               (String verificationId, int resendToken) async {
@@ -79,7 +79,7 @@ class MapScreenState extends State<SignIn> {
                         );
                       } else {
                         message = "The Account Does Not Exist";
-                        showAlertDialog(context, message);
+                        showAlertDialog(context, Text(message));
                       }
                     });
                   },

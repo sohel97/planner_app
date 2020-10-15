@@ -3,6 +3,7 @@ import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/screens/member_screens/pick_workout_schedule_for_user.dart';
 import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/Calculations.dart';
+import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
 import '../../entities/Member.dart';
@@ -77,9 +78,8 @@ class _MemberHistoryState extends State<MemberHistory> {
                         label: sDeleteWorkoutPlanQuestion,
                         callback: () {
                           setState(() {
-                            widget.member.plansHistory.remove(
+                            removePlanFromMember(widget.member,
                                 widget.member.plansHistory.elementAt(position));
-                            //TODO SAVE TO FIREBASE
                             Navigator.of(context).pop();
                           });
                         });

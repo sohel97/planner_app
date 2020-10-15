@@ -162,3 +162,15 @@ void updateUserPlan(WorkoutPlan plan, Member user) {
       .child("plansHistory")
       .update({key: plan.getJson()});
 }
+
+void removePlanFromMember(Member member, WorkoutPlan plan) {
+  member.plansHistory.remove(plan);
+
+  String key = plan.getKey();
+  ref
+      .child("Customers")
+      .child(member.id)
+      .child("plansHistory")
+      .child(key)
+      .remove();
+}

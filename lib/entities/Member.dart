@@ -79,4 +79,13 @@ class Member {
       this.plansHistory = [];
     }
   }
+
+  WorkoutPlan checkForOverlapPlans(WorkoutPlan plan) {
+    print("plans history length ${plansHistory.length}");
+    for (WorkoutPlan overlapPlan in plansHistory) {
+      if (plan.checkIfOverlap(overlapPlan)) return overlapPlan;
+    }
+
+    return null;
+  }
 }

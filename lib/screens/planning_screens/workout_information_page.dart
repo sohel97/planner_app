@@ -19,13 +19,28 @@ class WorkoutInformationPage extends StatefulWidget {
 
 class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
   int duration;
+  DateTime selectedDate = DateTime.now();
   @override
   void initState() {
     duration = widget.workoutPlan.endDate
         .difference(widget.workoutPlan.startDate)
         .inDays;
-    print(duration);
+    selectedDate = widget.workoutPlan.startDate;
     super.initState();
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        widget.workoutPlan.startDate = selectedDate;
+      });
   }
 
   @override
@@ -72,6 +87,36 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.baseline,
+              //textBaseline: TextBaseline.alphabetic,
+              children: <Widget>[
+                Text(
+                  sPlanStartDate,
+                  style: kLabelTextStyle,
+                ),
+                Text(
+                  "${selectedDate.toLocal()}".split(' ')[0],
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                RaisedButton(
+                  onPressed: () => _selectDate(context),
+                  child: Text(
+                    sSelectDate,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  color: kButtonsColor,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
             Text(
               sPlanDuration,
               style: kLabelTextStyle,

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:planner_app/services/Calculations.dart';
+
 import 'WorkoutDay.dart';
 
 /*----------------------------------------------------------------------------\
@@ -95,6 +97,18 @@ class WorkoutPlan {
       "day6": daySix.getJson(),
       "day7": daySeven.getJson()
     };
+  }
+
+  String getNameAndPeriod() {
+    return planName +
+        "\nStart: " +
+        convertDate(startDate) +
+        ", End: " +
+        convertDate(endDate);
+  }
+
+  bool checkIfOverlap(WorkoutPlan plan) {
+    return plan.startDate.isBefore(endDate) && startDate.isBefore(plan.endDate);
   }
 
   setEndDate(int duration) {

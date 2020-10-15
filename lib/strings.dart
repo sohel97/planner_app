@@ -30,6 +30,7 @@ String sAddCustomPlan = 'اضافة برنامج جديد';
 String sAddPremadePlan = 'اضافة برنامج من القائمة';
 String sAddAsPremadeWorkout = 'اضافة البرنامج الى قائمة البرامج الجاهزة';
 String sPremadePlansDirection = 'Planners/premadePlans';
+String sSelectDate = 'اختيار تاريخ بدابة البرنامج';
 
 /// ****************************Labels Strings**********************************/
 String sPeriodToAdd = 'مدة الاشتراك بالاشهر';
@@ -69,6 +70,8 @@ String sCancel = 'الغاء';
 String sAreYouSureYouWantToDeleteTheUser =
     "هل انت متاكد انك تريد ازالة بيانات المستخدم";
 String sDeleteUserData = "ازالة بيانات المستخدم";
+String sOverlapPlanMessage =
+    'لا يمكن اضافة البرنامج, لانه يتداخل مع البرنامج التالي: ';
 
 /// ***************************Pages Strings************************************/
 String sAppName = 'كنتري التوت';
@@ -93,6 +96,7 @@ String sHealthApproval = "تصريح طبي";
 String sMembershipStartDate = "بدأ الاشتراك";
 String sMembershipEndfDate = "نهاية الاشتراك";
 String sPlanEndfDate = "نهاية البرنامج";
+String sPlanStartDate = 'تاريخ بداية البرنامج';
 
 /// ***************************Payment Strings**********************************/
 String sShekel = "₪";

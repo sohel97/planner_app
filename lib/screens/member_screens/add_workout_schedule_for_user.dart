@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/components/Alert.dart';
 import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/scroll_nav_item.dart';
 import 'package:planner_app/constants.dart';
@@ -96,18 +97,30 @@ class AddWorkoutScheduleForUserState extends State<AddWorkoutScheduleForUser>
             ),
             tooltip: sSave,
             onPressed: () {
-              addPlanToCustomer(plan, widget.member);
-              questionAlert(
-                  context: context,
-                  label: sAddAsPremadeWorkout,
-                  callback: () {
-                    addAsAPremadePlan(plan);
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                  cancelCallback: () {
-                    Navigator.of(context).pop();
-                  });
+              WorkoutPlan overlapPlan =
+                  widget.member.checkForOverlapPlans(plan);
+              if (overlapPlan != null) {
+                showAlertDialog(
+                    context,
+                    Text(
+                        sOverlapPlanMessage +
+                            '\n' +
+                            overlapPlan.getNameAndPeriod(),
+                        textDirection: TextDirection.rtl));
+              } else {
+                addPlanToCustomer(plan, widget.member);
+                questionAlert(
+                    context: context,
+                    label: sAddAsPremadeWorkout,
+                    callback: () {
+                      addAsAPremadePlan(plan);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    cancelCallback: () {
+                      Navigator.of(context).pop();
+                    });
+              }
             },
           ),
         ],
