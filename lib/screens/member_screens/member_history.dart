@@ -78,8 +78,9 @@ class _MemberHistoryState extends State<MemberHistory> {
                         label: sDeleteWorkoutPlanQuestion,
                         callback: () {
                           setState(() {
-                            removePlanFromMember(widget.member,
-                                widget.member.plansHistory.elementAt(position));
+                            RemovePlan(
+                                widget.member.plansHistory.elementAt(position),
+                                member: widget.member);
                             Navigator.of(context).pop();
                           });
                         });

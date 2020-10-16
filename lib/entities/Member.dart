@@ -88,4 +88,14 @@ class Member {
 
     return null;
   }
+
+  List<WorkoutPlan> getInvalidPlans({int days = 3}) {
+    List<WorkoutPlan> invalidPlans = new List<WorkoutPlan>();
+    for (WorkoutPlan plan in plansHistory) {
+      if (plan.endDate
+          .isAfter(DateTime.now().subtract(new Duration(days: days))))
+        invalidPlans.add(plan);
+    }
+    return invalidPlans.length > 0 ? invalidPlans : null;
+  }
 }

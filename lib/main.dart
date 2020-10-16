@@ -7,6 +7,7 @@ import 'package:planner_app/screens/SignIn.dart';
 import 'package:planner_app/screens/SplashScreen.dart';
 import 'package:planner_app/screens/member_screens/member_history.dart';
 import 'package:planner_app/screens/member_screens/search_member_page.dart';
+import 'package:planner_app/screens/planning_screens/invalid_plans.dart';
 import 'package:planner_app/screens/planning_screens/premade_plans_page.dart';
 import 'package:planner_app/strings.dart';
 
@@ -74,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     userJsn = widget.userJsn;
     _children = [
       SearchMemberPage(),
-      Container(),
+      InvalidPlansPage(),
       PremadePlansPage(),
       /*
       MemberHistory(
@@ -94,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
         title: new Text(
           sAppName,
           textDirection: kAppDirection,

@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
         .then((MapEntry<String, dynamic> userJsn) {
       if (userJsn != null) {
         SignIn.planner = Planner.fromPlanner(userJsn.value);
-
+        Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyHomePage(userJsn: userJsn)));
       }

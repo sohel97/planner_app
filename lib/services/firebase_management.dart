@@ -49,6 +49,18 @@ Future<List<Member>> getPlanerMembers(
   });
 }
 
+Future<List> getInvalidPlans({int days = 3}) async {
+  return getPlanerMembers().then((List<Member> members) {
+    List invPlansWithMembers = new List();
+    for (Member member in members) {
+      List<WorkoutPlan> invPlans = member.getInvalidPlans();
+      if (invPlans != null)
+        invPlansWithMembers.add([member, member.getInvalidPlans()]);
+    }
+    return invPlansWithMembers;
+  });
+}
+
 Future<MapEntry<String, dynamic>> checkPhoneNumber(
     String phoneNumber, BuildContext context) async {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -78,15 +90,8 @@ addPlanToCustomer(WorkoutPlan plan, Member member) {
       .set(member.getPlansHistoryJson());
 }
 
-//TODO this
 Future<List<WorkoutPlan>> getAllPremadePlans(
     {MapEntry<String, dynamic> usrJson}) {
-  /*
-  premadePlans.add(new WorkoutPlan(planName: 'برنامج مبتدئين'));
-  premadePlans.add(new WorkoutPlan(planName: 'برنامج للنزول بالوزن'));
-  premadePlans.add(new WorkoutPlan(planName: 'برنامج متقدمين'));
-  ref.child("premadePlans").set(getJsonOfArr(premadePlans));
-   */
   print("the id ${SignIn.planner.id}");
   return ref
       .child(SignIn.planner.id)
@@ -163,14 +168,18 @@ void updateUserPlan(WorkoutPlan plan, Member user) {
       .update({key: plan.getJson()});
 }
 
-void removePlanFromMember(Member member, WorkoutPlan plan) {
-  member.plansHistory.remove(plan);
-
-  String key = plan.getKey();
-  ref
-      .child("Customers")
-      .child(member.id)
-      .child("plansHistory")
-      .child(key)
-      .remove();
+void RemovePlan(WorkoutPlan plan, {Member member = null}) {
+  if (member != null) {
+    member.plansHistory.remove(plan);
+    String key = plan.getKey();
+    ref
+        .child("Customers")
+        .child(member.id)
+        .child("plansHistory")
+        .child(key)
+        .remove();
+  } else {
+    String key = plan.getKey();
+    ref.child(SignIn.planner.id).child("PremadePlans").child(key).remove();
+  }
 }

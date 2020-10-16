@@ -1,5 +1,5 @@
 String convertDate(DateTime date) {
-  return "${date.day}/${date.month}/${date.year}";
+  return "${date.year}-${date.month}-${date.day}";
 }
 
 getJsonOfArr(var arrOfObj) {

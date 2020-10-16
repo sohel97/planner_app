@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
+import '../../strings.dart';
 import 'add_workout_schedule_page.dart';
 
 /*----------------------------------------------------------------------------\
@@ -61,6 +63,18 @@ class _PremadePlansPageState extends State<PremadePlansPage> {
                                                 snapshot.data
                                                     .elementAt(position))))
                                 .then((value) => setState(() {}));
+                          },
+                          onLongPress: () {
+                            questionAlert(
+                                context: context,
+                                label: sDeleteWorkoutPlanQuestion,
+                                callback: () {
+                                  setState(() {
+                                    RemovePlan(
+                                        snapshot.data.elementAt(position));
+                                    Navigator.of(context).pop();
+                                  });
+                                });
                           },
                           child: Card(
                             child: Padding(
