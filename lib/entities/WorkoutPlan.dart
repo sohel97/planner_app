@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:planner_app/services/Calculations.dart';
 
 import 'WorkoutDay.dart';
@@ -31,9 +33,9 @@ class WorkoutPlan {
   WorkoutDay daySeven;
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
-  int duration = 0;
+  bool currentPlan = false;
   String key = "";
-  WorkoutPlan({this.planName, int days = 30}) {
+  WorkoutPlan({this.planName}) {
     dayOne = new WorkoutDay();
     dayTwo = new WorkoutDay();
     dayThree = new WorkoutDay();
@@ -43,8 +45,27 @@ class WorkoutPlan {
     daySeven = new WorkoutDay();
     startDate = DateTime.now();
     endDate = startDate;
-    endDate = startDate.add(new Duration(days: days));
-    duration = days;
+    endDate = startDate.add(new Duration(days: 10));
+    currentPlan = false;
+  }
+
+  WorkoutPlan clone() {
+    WorkoutPlan newPlan = new WorkoutPlan();
+    newPlan.planName = this.planName;
+    newPlan.planDescription = this.planDescription;
+    newPlan.planner = this.planner;
+    newPlan.key = generateNewKey();
+    newPlan.dayOne = this.dayOne.clone();
+    newPlan.dayTwo = this.dayTwo.clone();
+    newPlan.dayThree = this.dayThree.clone();
+    newPlan.dayFour = this.dayFour.clone();
+    newPlan.dayFive = this.dayFive.clone();
+    newPlan.daySix = this.daySix.clone();
+    newPlan.daySeven = this.daySeven.clone();
+    newPlan.startDate = this.startDate;
+    newPlan.endDate = this.endDate;
+    newPlan.currentPlan = false;
+    return newPlan;
   }
 
   WorkoutPlan.getFromJson(var json, String key) {
@@ -61,11 +82,11 @@ class WorkoutPlan {
     daySeven = WorkoutDay.getFromJson(json["day7"]);
     startDate = DateTime.parse(json["startDate"]);
     endDate = DateTime.parse(json["endDate"]);
-    duration = json["duration"];
+    currentPlan = json["currentPlan"];
   }
-  String getKey() {
-    if (key != "") return key;
-    key = endDate.year.toString() +
+
+  String generateNewKey() {
+    return endDate.year.toString() +
         "|" +
         endDate.month.toString() +
         "|" +
@@ -78,17 +99,22 @@ class WorkoutPlan {
         endDate.second.toString() +
         "|RandomNum:" +
         (new Random()).nextInt(100).toString();
+  }
+
+  String getKey() {
+    if (key != "") return key;
+    key = generateNewKey();
     return key;
   }
 
-  getJson() {
+  Map<String, dynamic> getJson() {
     return {
       "planName": planName == null ? "untitled" : planName,
       "planDescription": planDescription,
       "planner": planner,
       "startDate": startDate.toString(),
       "endDate": endDate.toString(),
-      "duration": duration,
+      "currentPlan": currentPlan,
       "day1": dayOne.getJson(),
       "day2": dayTwo.getJson(),
       "day3": dayThree.getJson(),

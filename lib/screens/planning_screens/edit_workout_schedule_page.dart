@@ -30,7 +30,8 @@ List<NavigationModel> navigationItems = [
 class EditWorkoutSchedulePage extends StatefulWidget {
   final WorkoutPlan plan;
   final Member member;
-  EditWorkoutSchedulePage(this.member, this.plan);
+  final bool update;
+  EditWorkoutSchedulePage(this.member, this.plan, {this.update = true});
 
   @override
   EditWorkoutSchedulePageState createState() {
@@ -63,6 +64,7 @@ class EditWorkoutSchedulePageState extends State<EditWorkoutSchedulePage>
     _children = [
       new WorkoutInformationPage(
         workoutPlan: widget.plan,
+        member: widget.member,
       ),
       new WorkoutDayPage(
           workoutDay: widget.plan.dayOne,
@@ -104,8 +106,11 @@ class EditWorkoutSchedulePageState extends State<EditWorkoutSchedulePage>
             onPressed: () {
               if (widget.member == null)
                 updatePremadePlan(widget.plan);
-              else
-                updateUserPlan(widget.plan, widget.member);
+              else {
+                widget.update == true
+                    ? updateUserPlan(widget.plan, widget.member)
+                    : addPlanToCustomer(widget.plan, widget.member);
+              }
               Navigator.of(context).pop();
             },
           ),

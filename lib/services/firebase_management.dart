@@ -82,12 +82,37 @@ Future<MapEntry<String, dynamic>> checkPhoneNumber(
 
 addPlanToCustomer(WorkoutPlan plan, Member member) {
   member.addNewPlan(plan);
-  print(member.id);
+  member.changeCurrentPlanTo(plan);
   ref
       .child("Customers")
       .child(member.id)
       .child("plansHistory")
-      .set(member.getPlansHistoryJson());
+      .orderByChild("currentPlan")
+      .equalTo(true)
+      .limitToFirst(1)
+      .once()
+      .then((DataSnapshot snapshot) {
+    if (snapshot.value != null) {
+      print("not null ${snapshot.value}");
+      return snapshot.key;
+    }
+    return null;
+  }).then((String key) {
+    if (key != null) {
+      ref
+          .child("Customers")
+          .child(member.id)
+          .child("plansHistory")
+          .child(key)
+          .update({"currentPlan": false});
+    }
+  }).then((value) {
+    ref
+        .child("Customers")
+        .child(member.id)
+        .child("plansHistory")
+        .set(member.getPlansHistoryJson());
+  });
 }
 
 Future<List<WorkoutPlan>> getAllPremadePlans(
@@ -113,21 +138,21 @@ Future<List<WorkoutPlan>> getAllPremadePlans(
 
 //TODO this
 List<Workout> getAllWorkouts(WorkoutType muscleName) {
-  Workout workout1 = new Workout();
+  Workout workout1 = new Workout(null, null, null, null, null);
   workout1.gifPath = 'assets/images/workout.gif';
   workout1.workoutName = 'first';
   workout1.content = 'content';
   workout1.sideNote = 'sidenote';
   workout1.type = WorkoutType.Shoulders;
 
-  Workout workout = new Workout();
+  Workout workout = new Workout(null, null, null, null, null);
   workout.gifPath = 'assets/images/workout.gif';
   workout.workoutName = 'name';
   workout.content = 'content';
   workout.sideNote = 'sidenote';
   workout.type = WorkoutType.Stretching;
 
-  Workout workout2 = new Workout();
+  Workout workout2 = new Workout(null, null, null, null, null);
   workout2.gifPath = 'assets/images/workout.gif';
   workout2.workoutName = 'name';
   workout2.content = 'content';
@@ -141,7 +166,6 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
   return list;
 }
 
-//TODO
 addAsAPremadePlan(WorkoutPlan plan) {
   String key = plan.getKey();
 

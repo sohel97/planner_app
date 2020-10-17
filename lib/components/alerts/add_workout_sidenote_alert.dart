@@ -138,7 +138,8 @@ class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
                           child: Text(sAdd),
                           onPressed: () {
                             if (_proccedKey.currentState.validate()) {
-                              Workout toAdd = new Workout();
+                              Workout toAdd =
+                                  new Workout(null, null, null, null, null);
                               toAdd.type = widget.workout.type;
                               toAdd.workoutName = widget.workout.workoutName;
                               toAdd.gifPath = widget.workout.gifPath;
@@ -250,7 +251,8 @@ class _AerobicSideNoteAlertState extends State<AerobicSideNoteAlert> {
                         ),
                         child: Text(sAdd),
                         onPressed: () {
-                          Workout toAdd = new Workout();
+                          Workout toAdd =
+                              new Workout(null, null, null, null, null);
                           toAdd.type = widget.workout.type;
                           toAdd.workoutName = widget.workout.workoutName;
                           toAdd.gifPath = widget.workout.gifPath;

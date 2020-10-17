@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/constants.dart';
+import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/services/validators.dart';
 
@@ -7,11 +8,9 @@ import '../../strings.dart';
 
 class WorkoutInformationPage extends StatefulWidget {
   final WorkoutPlan workoutPlan;
-  final GlobalKey<FormState> key;
-  WorkoutInformationPage({
-    this.workoutPlan,
-    this.key,
-  });
+  final Member member;
+  bool isCurrentPlan = true;
+  WorkoutInformationPage({this.workoutPlan, this.member});
 
   @override
   _WorkoutInformationPageState createState() => _WorkoutInformationPageState();
@@ -25,6 +24,7 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
     duration = widget.workoutPlan.endDate
         .difference(widget.workoutPlan.startDate)
         .inDays;
+    widget.isCurrentPlan = widget.workoutPlan.currentPlan;
     selectedDate = widget.workoutPlan.startDate;
     super.initState();
   }
@@ -52,9 +52,7 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              initialValue: widget.workoutPlan.planName != null
-                  ? widget.workoutPlan.planName
-                  : '',
+              initialValue: widget.workoutPlan.planName,
               validator: textFieldValidator,
               decoration: InputDecoration(labelText: sPlanName),
               onChanged: (text) {
@@ -87,10 +85,28 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            widget.member != null
+                ? Column(
+                    children: <Widget>[
+                      CheckboxListTile(
+                        title: Text(sCurrentPlan),
+                        value: widget.isCurrentPlan,
+                        onChanged: (newValue) {
+                          setState(() {
+                            widget.workoutPlan.currentPlan = newValue;
+                            widget.isCurrentPlan = newValue;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity
+                            .leading, //  <-- leading Checkbox
+                      )
+                    ],
+                  )
+                : SizedBox(
+                    height: 1.0,
+                  ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              //crossAxisAlignment: CrossAxisAlignment.baseline,
-              //textBaseline: TextBaseline.alphabetic,
               children: <Widget>[
                 Text(
                   sPlanStartDate,
@@ -148,7 +164,6 @@ class _WorkoutInformationPageState extends State<WorkoutInformationPage> {
                 onChanged: (double newValue) {
                   setState(() {
                     duration = newValue.round();
-                    print("adding duration ${duration}");
                     widget.workoutPlan.setEndDate(duration);
                   });
                 },

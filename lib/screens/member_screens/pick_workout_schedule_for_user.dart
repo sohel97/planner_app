@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
@@ -55,10 +56,24 @@ class _PickWorkoutScheduleForUserState
                       itemBuilder: (context, position) {
                         return InkWell(
                           onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditWorkoutSchedulePage(
+                                          widget.user,
+                                          snapshot.data
+                                              .elementAt(position)
+                                              .clone(),
+                                          update: false,
+                                        )));
+
+                            /*
                             addPlanToCustomer(
                                 snapshot.data.elementAt(position), widget.user);
                             //     widget.user.plansHistory.add(snapshot.data.elementAt(position));
-                            Navigator.of(context).pop();
+                               Navigator.of(context).pop();
+                             */
                           },
                           child: Card(
                             child: Padding(

@@ -98,4 +98,13 @@ class Member {
     }
     return invalidPlans.length > 0 ? invalidPlans : null;
   }
+
+  changeCurrentPlanTo(WorkoutPlan newCurrentPlan) {
+    for (WorkoutPlan plan in plansHistory) {
+      if (plan.currentPlan && plan.getKey() != newCurrentPlan.getKey()) {
+        plan.currentPlan = false;
+        break;
+      }
+    }
+  }
 }

@@ -65,6 +65,7 @@ class AddWorkoutScheduleForUserState extends State<AddWorkoutScheduleForUser>
     _children = [
       new WorkoutInformationPage(
         workoutPlan: plan,
+        member: widget.member,
       ),
       new WorkoutDayPage(
           workoutDay: plan.dayOne, animationController: _animationController),

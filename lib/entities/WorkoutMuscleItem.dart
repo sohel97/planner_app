@@ -29,6 +29,14 @@ class WorkoutMuscleItem {
     this.isExpanded = false;
     this.workouts = new List<Workout>();
   }
+  WorkoutMuscleItem clone() {
+    WorkoutMuscleItem newWorkoutMuscle = new WorkoutMuscleItem(
+        header: this.header, iconpic: this.iconpic, type: this.type);
+    for (Workout work in workouts) {
+      newWorkoutMuscle.workouts.add(work.clone());
+    }
+    return newWorkoutMuscle;
+  }
 
   WorkoutMuscleItem.getFromJson(var json) {
     isExpanded = json["isExpanded"];
@@ -45,7 +53,7 @@ class WorkoutMuscleItem {
     type = stringToType[json["type"]];
   }
 
-  getJson() {
+  Map<String, dynamic> getJson() {
     var workoutsJsons = {};
     for (int i = 0; i < workouts.length; i++) {
       workoutsJsons[(i + 1).toString()] = workouts[i].getJson();

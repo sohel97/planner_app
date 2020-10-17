@@ -67,10 +67,19 @@ class WorkoutDay {
         iconpic: 'assets/images/stretching.png',
         type: WorkoutType.Stretching));
   }
+  WorkoutDay clone() {
+    WorkoutDay newDay = new WorkoutDay();
+    newDay.restDay = this.restDay;
+    for (WorkoutMuscleItem work in workouts) {
+      newDay.workouts.add(work.clone());
+    }
+    return newDay;
+  }
 
   WorkoutDay.getFromJson(var json) {
     restDay = json["restDay"];
     var workouts = json["workouts"];
+    //print(workouts);
     List<dynamic> mapOfMaps = workouts;
     mapOfMaps = mapOfMaps.where((element) => element != null).toList();
     //print(mapOfMaps);
@@ -78,8 +87,8 @@ class WorkoutDay {
       this.workouts.add(new WorkoutMuscleItem.getFromJson(Map.from(value)));
     });
   }
-  getJson() {
-    var workoutsJsons = {};
+  Map<String, dynamic> getJson() {
+    Map<String, dynamic> workoutsJsons = {};
     for (int i = 0; i < workouts.length; i++) {
       workoutsJsons[(i + 1).toString()] = workouts[i].getJson();
     }

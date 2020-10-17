@@ -41,8 +41,9 @@ class Workout {
   String content;
   String gifPath;
   String sideNote;
+
   Workout(
-      {this.type, this.workoutName, this.content, this.gifPath, this.sideNote});
+      this.type, this.workoutName, this.content, this.gifPath, this.sideNote);
   Workout.getFromJson(var json) {
     type = stringToType[json["type"]];
     workoutName = json["workoutName"];
@@ -50,8 +51,12 @@ class Workout {
     gifPath = json["gifPath"];
     sideNote = json["sideNote"];
   }
+  clone() {
+    return new Workout(
+        this.type, this.workoutName, this.content, this.gifPath, this.sideNote);
+  }
 
-  getJson() {
+  Map<String, dynamic> getJson() {
     return {
       "type": type.toString(),
       "workoutName": workoutName,
