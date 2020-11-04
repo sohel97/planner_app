@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/Member.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/services/Calculations.dart';
 
 class InvalidPlanTile extends StatelessWidget {

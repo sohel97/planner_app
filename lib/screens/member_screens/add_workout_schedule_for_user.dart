@@ -4,7 +4,7 @@ import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/scroll_nav_item.dart';
 import 'package:planner_app/constants.dart';
 import 'package:planner_app/entities/Member.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/screens/planning_screens/workout_day_page.dart';
 import 'package:planner_app/screens/planning_screens/workout_information_page.dart';
 import 'package:planner_app/services/firebase_management.dart';

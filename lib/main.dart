@@ -1,18 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
 import 'package:planner_app/screens/SignIn.dart';
 import 'package:planner_app/screens/SplashScreen.dart';
-import 'package:planner_app/screens/member_screens/member_history.dart';
 import 'package:planner_app/screens/member_screens/search_member_page.dart';
 import 'package:planner_app/screens/planning_screens/invalid_plans.dart';
 import 'package:planner_app/screens/planning_screens/premade_plans_page.dart';
 import 'package:planner_app/strings.dart';
 
 import 'constants.dart';
-import 'entities/Member.dart';
 
 /*----------------------------------------------------------------------------\
 |

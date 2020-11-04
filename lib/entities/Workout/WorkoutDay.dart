@@ -1,4 +1,4 @@
-import 'package:planner_app/entities/Workout.dart';
+import 'package:planner_app/entities/Workout/Workout.dart';
 
 import 'WorkoutMuscleItem.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'WorkoutPlan.dart';
+import 'Workout/WorkoutPlan.dart';
 
 /*----------------------------------------------------------------------------\
 |
