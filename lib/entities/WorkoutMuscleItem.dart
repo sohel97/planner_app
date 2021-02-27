@@ -35,6 +35,7 @@ class WorkoutMuscleItem {
     for (Workout work in workouts) {
       newWorkoutMuscle.workouts.add(work.clone());
     }
+    newWorkoutMuscle.isExpanded = this.isExpanded;
     return newWorkoutMuscle;
   }
 

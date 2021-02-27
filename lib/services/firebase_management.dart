@@ -93,7 +93,6 @@ addPlanToCustomer(WorkoutPlan plan, Member member) {
       .once()
       .then((DataSnapshot snapshot) {
     if (snapshot.value != null) {
-      print("not null ${snapshot.value}");
       return snapshot.key;
     }
     return null;

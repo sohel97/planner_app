@@ -21,13 +21,14 @@ class WorkoutDay {
   bool restDay;
   WorkoutDay() {
     //TODO add names to String.dart
-    restDay = false;
+    restDay = true;
     workouts = new List<WorkoutMuscleItem>();
     workouts.add(new WorkoutMuscleItem(
       header: 'shouldersWorkouts',
       iconpic: 'assets/images/shoulders.png',
       type: WorkoutType.Shoulders,
     ));
+
     workouts.add(new WorkoutMuscleItem(
       header: 'backWorkouts',
       iconpic: 'assets/images/back.png',
@@ -69,6 +70,7 @@ class WorkoutDay {
   }
   WorkoutDay clone() {
     WorkoutDay newDay = new WorkoutDay();
+    newDay.workouts.clear();
     newDay.restDay = this.restDay;
     for (WorkoutMuscleItem work in workouts) {
       newDay.workouts.add(work.clone());

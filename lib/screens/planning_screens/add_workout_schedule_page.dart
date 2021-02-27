@@ -55,7 +55,7 @@ class AddWorkoutSchedulePageState extends State<AddWorkoutSchedulePage>
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     widthAnimation = Tween<double>(begin: maxWidth, end: minWidth)
         .animate(_animationController);
-    plan = new WorkoutPlan();
+    if (plan == null) plan = new WorkoutPlan();
     _children = [
       new WorkoutInformationPage(
         workoutPlan: plan,
