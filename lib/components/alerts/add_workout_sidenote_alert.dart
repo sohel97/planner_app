@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:planner_app/entities/Workout.dart';
+import 'package:planner_app/entities/Workout/Workout.dart';
 
 import '../../constants.dart';
 import '../../strings.dart';

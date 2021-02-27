@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/Member.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/screens/planning_screens/edit_workout_schedule_page.dart';
 import 'package:planner_app/services/firebase_management.dart';
 

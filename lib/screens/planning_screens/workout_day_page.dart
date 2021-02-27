@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/alerts/show_workout_alert.dart';
-import 'package:planner_app/entities/Workout.dart';
-import 'package:planner_app/entities/WorkoutDay.dart';
-import 'package:planner_app/entities/WorkoutMuscleItem.dart';
+import 'package:planner_app/entities/Workout/Workout.dart';
+import 'package:planner_app/entities/Workout/WorkoutDay.dart';
+import 'package:planner_app/entities/Workout/WorkoutMuscleItem.dart';
 import 'package:planner_app/screens/planning_screens/pick_exercise_page.dart';
 
 import '../../constants.dart';

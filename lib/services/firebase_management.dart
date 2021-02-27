@@ -1,16 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:planner_app/components/Alert.dart';
 import 'package:planner_app/entities/Member.dart';
-import 'package:planner_app/entities/Workout.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/Workout.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/screens/SignIn.dart';
-import 'package:planner_app/services/Planner.dart';
-import 'package:planner_app/strings.dart';
-
-import 'Calculations.dart';
 
 /*----------------------------------------------------------------------------\
 |

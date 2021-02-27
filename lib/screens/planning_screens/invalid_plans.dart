@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/InvalidPlanTile.dart';
-import 'package:planner_app/components/member_tile.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/screens/member_screens/member_history.dart';
 import 'package:planner_app/services/firebase_management.dart';
 
 import '../../constants.dart';
-import '../../entities/Member.dart';
 
 /*----------------------------------------------------------------------------\
 |

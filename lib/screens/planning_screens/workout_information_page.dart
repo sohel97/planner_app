@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planner_app/constants.dart';
 import 'package:planner_app/entities/Member.dart';
-import 'package:planner_app/entities/WorkoutPlan.dart';
+import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/services/validators.dart';
 
 import '../../strings.dart';
