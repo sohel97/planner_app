@@ -113,7 +113,7 @@ class EditWorkoutSchedulePageState extends State<EditWorkoutSchedulePage>
               }
               Navigator.of(context).pop();
             },
-          ),
+          )
         ],
       ),
       body: getWidget(context, widget),

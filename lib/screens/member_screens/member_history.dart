@@ -89,7 +89,14 @@ class _MemberHistoryState extends State<MemberHistory> {
                     padding: const EdgeInsets.all(16.0),
                     child: ListTile(
                       leading: Text(
-                        widget.member.plansHistory.elementAt(position).planName,
+                        widget.member.plansHistory
+                                    .elementAt(position)
+                                    .planName !=
+                                null
+                            ? widget.member.plansHistory
+                                .elementAt(position)
+                                .planName
+                            : 'untitled',
                         style: TextStyle(fontSize: 22.0),
                       ),
                       subtitle: Text(
