@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 showWorkoutAlert({context, img}) {
@@ -26,9 +28,7 @@ class _WorkoutAlertState extends State<WorkoutAlert> {
         content: Stack(
           overflow: Overflow.visible,
           children: <Widget>[
-            Image.asset(
-              widget.img,
-            ),
+            Image.file(new File(widget.img)),
           ],
         ));
   }

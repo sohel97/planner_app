@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:planner_app/entities/Workout/Workout.dart';
 
@@ -29,9 +29,9 @@ class StrengthSideNoteAlert extends StatefulWidget {
 
 class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
   int ribs = 0;
-  List<int> iter = new List<int>();
-  List<int> values = new List<int>();
-
+  List<int> iter = <int>[];
+  List<int> values = <int>[];
+  final _proccedKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -39,10 +39,9 @@ class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
 
   @override
   Widget build(BuildContext context) {
-    final _proccedKey = GlobalKey<FormState>();
-    return AlertDialog(
-      content: Stack(
-        overflow: Overflow.visible,
+    return Dialog(
+      child: Stack(
+        clipBehavior: Clip.none,
         children: <Widget>[
           Directionality(
             textDirection: kAppDirection,
@@ -84,7 +83,8 @@ class _StrengthSideNoteAlertState extends State<StrengthSideNoteAlert> {
                           value: ribs.toDouble(),
                           min: 0,
                           max: 5,
-                          divisions: 5,
+                          // divisions: 5,
+
                           onChanged: (double newValue) {
                             setState(() {
                               ribs = newValue.round();

@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_cache_manager_firebase/flutter_cache_manager_firebase.dart';
 import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/Workout/Workout.dart';
 import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
@@ -27,7 +30,7 @@ List<WorkoutPlan> premadePlans = new List<WorkoutPlan>();
 Future<List<Member>> getPlanerMembers(
     {OrderBy orderBy, int days, String text = ""}) {
   return ref.child("Customers").once().then((DataSnapshot snapshot) {
-    List<Member> members = new List<Member>();
+    List<Member> members = <Member>[];
 
     if (snapshot.value != null) {
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
@@ -130,23 +133,77 @@ Future<List<WorkoutPlan>> getAllPremadePlans(
 }
 
 //TODO this
-List<Workout> getAllWorkouts(WorkoutType muscleName) {
+Future<List<Workout>> getAllWorkouts(WorkoutType muscleName) async {
+  return FirebaseDatabase()
+      .reference()
+      .child("Exercises ")
+      .child(muscleName.toString())
+      .once()
+      .then((DataSnapshot snapshot) async {
+    List<Workout> workouts = <Workout>[];
+
+    if (snapshot.value != null) {
+      Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
+      for (var entry in mapOfMaps.entries) {
+        var path = entry.key;
+        print(path);
+        var file = await FirebaseCacheManager().getSingleFile(path);
+        Workout workout1 = new Workout(null, null, null, null, null);
+        workout1.gifPath = file.path;
+        workout1.workoutName = entry.value['Name'];
+        workout1.content = entry.value['Content'];
+
+        workout1.sideNote = entry.value['SideNote'];
+
+        workout1.type = WorkoutType.Shoulders;
+        print(workout1.toString());
+        workouts.add(workout1);
+      }
+    }
+    return workouts;
+  });
+
+  /*
+  return FirebaseStorage.instance
+      .ref()
+      .child('biceps')
+      .listAll()
+      .then((ListResult snapshot) async {
+    List<Workout> workouts = new List<Workout>();
+    String url = '';
+    for (Reference ref in snapshot.items) {
+      var file = await FirebaseCacheManager().getSingleFile(ref.fullPath);
+      print(ref.fullPath);
+      Workout workout1 = new Workout(null, null, null, null, null);
+      workout1.gifPath = file.path;
+      workout1.workoutName = 'first';
+      workout1.content = 'content';
+      workout1.sideNote = 'sidenote';
+      workout1.type = WorkoutType.Shoulders;
+      workouts.add(workout1);
+    }
+    return workouts;
+  });
+
+   */
+  /*
+  String gifString = ref.getDownloadURL();
   Workout workout1 = new Workout(null, null, null, null, null);
-  workout1.gifPath = 'assets/images/workout.gif';
+  workout1.gifPath = gifString;
   workout1.workoutName = 'first';
   workout1.content = 'content';
   workout1.sideNote = 'sidenote';
   workout1.type = WorkoutType.Shoulders;
 
   Workout workout = new Workout(null, null, null, null, null);
-  workout.gifPath = 'assets/images/workout.gif';
+  workout.gifPath = gifString;
   workout.workoutName = 'name';
   workout.content = 'content';
   workout.sideNote = 'sidenote';
   workout.type = WorkoutType.Stretching;
 
   Workout workout2 = new Workout(null, null, null, null, null);
-  workout2.gifPath = 'assets/images/workout.gif';
+  workout2.gifPath = gifString;
   workout2.workoutName = 'name';
   workout2.content = 'content';
   workout2.sideNote = 'sidenote';
@@ -157,6 +214,8 @@ List<Workout> getAllWorkouts(WorkoutType muscleName) {
   list.add(workout1);
   list.add(workout2);
   return list;
+
+   */
 }
 
 addAsAPremadePlan(WorkoutPlan plan) {

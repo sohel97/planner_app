@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/alerts/remove_workout_alert.dart';
 import 'package:planner_app/components/alerts/show_workout_alert.dart';
@@ -71,7 +74,7 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                     workoutMuscleItem.workouts.map<Widget>((Workout workout) {
                   return ListTile(
                     title: Text(workout.workoutName),
-                    leading: Image.asset(workout.gifPath),
+                    leading: Image.file(new File(workout.gifPath)),
                     trailing: Text(workout.sideNote),
                     subtitle: Text(workout.content),
                     onTap: () {

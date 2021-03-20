@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:planner_app/components/alerts/add_workout_sidenote_alert.dart';
 import 'package:planner_app/entities/Workout/Workout.dart';
@@ -14,11 +17,11 @@ class PickWorkoutPage extends StatefulWidget {
 }
 
 class _PickWorkoutPageState extends State<PickWorkoutPage> {
-  List<Workout> allWorkouts = new List<Workout>();
+  Future<List<Workout>> allWorkouts;
 
   @override
   void initState() {
-    allWorkouts = getAllWorkouts(widget.type);
+    //allWorkouts = getAllWorkouts(widget.type);
     super.initState();
   }
 
@@ -29,9 +32,42 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
           title: Text(sAddWorkout),
           centerTitle: true,
         ),
-        body: ListView(
+        body: new Column(children: <Widget>[
+          new Expanded(
+              child: FutureBuilder(
+                  future: getAllWorkouts(WorkoutType.Arms),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.done:
+                        return ListView(children: <Widget>[
+                          for (Workout workout in snapshot.data)
+                            ListTile(
+                              title: Text(workout.workoutName),
+                              leading: Image.file(new File(workout.gifPath)),
+                              trailing: Text(workout.type.toString()),
+                              subtitle: Text(workout.content),
+                              onTap: () {
+                                addWorkoutSideNote(
+                                    context: context,
+                                    workout: workout,
+                                    workouts: widget.workouts);
+                              },
+                            ),
+                        ]);
+                      case ConnectionState.none:
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                      default:
+                        return new ListView();
+                    }
+                  })
+
+              /*
+        ListView(
           shrinkWrap: true,
-          children: allWorkouts.map<ListTile>((Workout workout) {
+          children:
+
+          allWorkouts.map<ListTile>((Workout workout) {
             return ListTile(
               title: Text(workout.workoutName),
               leading: Image.asset(workout.gifPath),
@@ -46,5 +82,9 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
             );
           }).toList(),
         ));
+
+         */
+              ),
+        ]));
   }
 }
