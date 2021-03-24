@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -133,11 +134,11 @@ Future<List<WorkoutPlan>> getAllPremadePlans(
 }
 
 //TODO this
-Future<List<Workout>> getAllWorkouts(WorkoutType muscleName) async {
+Future<List<Workout>> getAllWorkouts(WorkoutType muscleType) async {
   return FirebaseDatabase()
       .reference()
-      .child("Exercises ")
-      .child(muscleName.toString())
+      .child("Exercises")
+      .child(EnumToString.convertToString(muscleType))
       .once()
       .then((DataSnapshot snapshot) async {
     List<Workout> workouts = <Workout>[];
@@ -145,17 +146,16 @@ Future<List<Workout>> getAllWorkouts(WorkoutType muscleName) async {
     if (snapshot.value != null) {
       Map<String, dynamic> mapOfMaps = Map.from(snapshot.value);
       for (var entry in mapOfMaps.entries) {
-        var path = entry.key;
+        var path = entry.key.replaceAll('-', '/') + '.gif';
         print(path);
         var file = await FirebaseCacheManager().getSingleFile(path);
         Workout workout1 = new Workout(null, null, null, null, null);
-        workout1.gifPath = file.path;
+        workout1.gifPath = path + '|' + file.path;
         workout1.workoutName = entry.value['Name'];
         workout1.content = entry.value['Content'];
-
         workout1.sideNote = entry.value['SideNote'];
 
-        workout1.type = WorkoutType.Shoulders;
+        workout1.type = muscleType;
         print(workout1.toString());
         workouts.add(workout1);
       }

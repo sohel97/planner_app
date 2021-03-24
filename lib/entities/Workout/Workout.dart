@@ -16,6 +16,7 @@ enum WorkoutType {
   Shoulders,
   Back,
   Arms,
+  Biceps,
   Chest,
   Abs,
   Hips,
@@ -24,15 +25,15 @@ enum WorkoutType {
   Stretching,
 }
 const stringToType = {
-  "WorkoutType.Shoulders": WorkoutType.Shoulders,
-  "WorkoutType.Back": WorkoutType.Back,
-  "WorkoutType.Arms": WorkoutType.Arms,
-  "WorkoutType.Chest": WorkoutType.Chest,
-  "WorkoutType.Abs": WorkoutType.Abs,
-  "WorkoutType.Hips": WorkoutType.Hips,
-  "WorkoutType.Legs": WorkoutType.Legs,
-  "WorkoutType.Aerobic": WorkoutType.Aerobic,
-  "WorkoutType.Stretching": WorkoutType.Stretching
+  "Shoulders": WorkoutType.Shoulders,
+  "Back": WorkoutType.Back,
+  "Arms": WorkoutType.Arms,
+  "Chest": WorkoutType.Chest,
+  "Abs": WorkoutType.Abs,
+  "Hips": WorkoutType.Hips,
+  "Legs": WorkoutType.Legs,
+  "Aerobic": WorkoutType.Aerobic,
+  "Stretching": WorkoutType.Stretching
 };
 
 class Workout {

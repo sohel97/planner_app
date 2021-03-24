@@ -35,7 +35,7 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
         body: new Column(children: <Widget>[
           new Expanded(
               child: FutureBuilder(
-                  future: getAllWorkouts(WorkoutType.Arms),
+                  future: getAllWorkouts(WorkoutType.Biceps),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.done:
@@ -43,7 +43,7 @@ class _PickWorkoutPageState extends State<PickWorkoutPage> {
                           for (Workout workout in snapshot.data)
                             ListTile(
                               title: Text(workout.workoutName),
-                              leading: Image.file(new File(workout.gifPath)),
+                              leading: Image.file(new File(workout.gifPath.split('|')[1])),
                               trailing: Text(workout.type.toString()),
                               subtitle: Text(workout.content),
                               onTap: () {

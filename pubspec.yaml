@@ -30,6 +30,8 @@ dependencies:
   path_provider: ^1.4.0
   flutter_cache_manager: ^2.1.2
   cached_network_image: ^2.5.1
+  enum_to_string: ^2.0.1
+
   flutter_cache_manager_firebase: ^1.0.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -74,11 +74,13 @@ class _WorkoutDayPageState extends State<WorkoutDayPage> {
                     workoutMuscleItem.workouts.map<Widget>((Workout workout) {
                   return ListTile(
                     title: Text(workout.workoutName),
-                    leading: Image.file(new File(workout.gifPath)),
+                    leading:
+                        Image.file(new File(workout.gifPath.split('|')[1])),
                     trailing: Text(workout.sideNote),
                     subtitle: Text(workout.content),
                     onTap: () {
-                      showWorkoutAlert(context: context, img: workout.gifPath);
+                      showWorkoutAlert(
+                          context: context, img: workout.gifPath.split('|')[1]);
                     },
                     onLongPress: () {
                       questionAlert(
