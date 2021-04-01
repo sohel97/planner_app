@@ -9,6 +9,7 @@ import 'package:planner_app/entities/Member.dart';
 import 'package:planner_app/entities/Workout/Workout.dart';
 import 'package:planner_app/entities/Workout/WorkoutPlan.dart';
 import 'package:planner_app/screens/SignIn.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 /*----------------------------------------------------------------------------\
 |
@@ -162,60 +163,21 @@ Future<List<Workout>> getAllWorkouts(WorkoutType muscleType) async {
     }
     return workouts;
   });
+}
 
-  /*
-  return FirebaseStorage.instance
+Future<List<String>> getGifsByType(WorkoutType exType) async {
+  firebase_storage.ListResult result = await firebase_storage
+      .FirebaseStorage.instance
       .ref()
-      .child('biceps')
-      .listAll()
-      .then((ListResult snapshot) async {
-    List<Workout> workouts = new List<Workout>();
-    String url = '';
-    for (Reference ref in snapshot.items) {
-      var file = await FirebaseCacheManager().getSingleFile(ref.fullPath);
-      print(ref.fullPath);
-      Workout workout1 = new Workout(null, null, null, null, null);
-      workout1.gifPath = file.path;
-      workout1.workoutName = 'first';
-      workout1.content = 'content';
-      workout1.sideNote = 'sidenote';
-      workout1.type = WorkoutType.Shoulders;
-      workouts.add(workout1);
-    }
-    return workouts;
-  });
-
-   */
-  /*
-  String gifString = ref.getDownloadURL();
-  Workout workout1 = new Workout(null, null, null, null, null);
-  workout1.gifPath = gifString;
-  workout1.workoutName = 'first';
-  workout1.content = 'content';
-  workout1.sideNote = 'sidenote';
-  workout1.type = WorkoutType.Shoulders;
-
-  Workout workout = new Workout(null, null, null, null, null);
-  workout.gifPath = gifString;
-  workout.workoutName = 'name';
-  workout.content = 'content';
-  workout.sideNote = 'sidenote';
-  workout.type = WorkoutType.Stretching;
-
-  Workout workout2 = new Workout(null, null, null, null, null);
-  workout2.gifPath = gifString;
-  workout2.workoutName = 'name';
-  workout2.content = 'content';
-  workout2.sideNote = 'sidenote';
-  workout2.type = WorkoutType.Aerobic;
-
-  List<Workout> list = new List<Workout>();
-  list.add(workout);
-  list.add(workout1);
-  list.add(workout2);
-  return list;
-
-   */
+      .child('ExercisesGifs')
+      .child(typeToString[exType])
+      .listAll();
+  List<String> filesPaths = <String>[];
+  for (firebase_storage.Reference ref in result.items) {
+    var file = await FirebaseCacheManager().getSingleFile(ref.fullPath);
+    filesPaths.add(file.path);
+  }
+  return filesPaths;
 }
 
 addAsAPremadePlan(WorkoutPlan plan) {

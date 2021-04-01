@@ -22,6 +22,9 @@ String sPlanDuration = 'مدة البرنامج';
 String sDeleteWorkoutQuestion = 'هل انت متاكد انك تريد ازالة التمرين؟';
 String sDeleteWorkoutPlanQuestion =
     'هل انت متاكد انك تريد ازالة برنامج التمرين؟';
+String sExerciseName = 'اسم التمرين';
+String sExerciseType = 'نوع التمرين';
+String sExerciseNotes = 'ملاحظات';
 String sWorkoutDuration = 'مدة التمرين بالدقائق';
 String sMinute = 'دقيقة';
 String sWorkoutRibs = 'عدد الدخلات';
@@ -52,6 +55,8 @@ String sDaySeven = 'اليوم السابع';
 String sTrainingDay = 'يوم تمرين';
 String sRestDay = 'يوم راحة';
 String sCurrentPlan = 'النظام الحالي للمتدرب';
+String sAllExercises = 'جميع التمارين';
+String sAddNewExercise = 'اضافة تمرين جديد';
 
 /// ****************************Validators Strings******************************/
 String sPleaseEnterText = "الرجاء تعبئة الخانة";

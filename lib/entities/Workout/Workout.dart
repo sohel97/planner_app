@@ -36,6 +36,18 @@ const stringToType = {
   "Stretching": WorkoutType.Stretching
 };
 
+const typeToString = {
+  WorkoutType.Shoulders: "Shoulders",
+  WorkoutType.Back: "Back",
+  WorkoutType.Arms: "Arms",
+  WorkoutType.Chest: "Chest",
+  WorkoutType.Abs: "Abs",
+  WorkoutType.Hips: "Hips",
+  WorkoutType.Legs: "Legs",
+  WorkoutType.Aerobic: "Aerobic",
+  WorkoutType.Stretching: "Stretching"
+};
+
 class Workout {
   WorkoutType type;
   String workoutName;
